@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gscm_store_owner/ViewModel/AppStartUp/app_startup_notifier.dart';
 
-class NotFoundScreen extends StatelessWidget {
-  const NotFoundScreen({ Key? key }) : super(key: key);
+class NotFoundScreen extends ConsumerWidget {
+  const NotFoundScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Not Found'),
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Scaffold(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Center(
+            child: Text('Logged In'),
+          ),
+          ElevatedButton(
+            onPressed: () => ref.read(appStartupProvider.notifier).logout(),
+            child: const Text('Logout'),
+          ),
+        ],
       ),
     );
   }
