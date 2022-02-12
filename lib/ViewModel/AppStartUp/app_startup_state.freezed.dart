@@ -26,8 +26,10 @@ class _$AppStartupStateTearOff {
     return const _Unauthenticated();
   }
 
-  _Authenticated authenticated() {
-    return const _Authenticated();
+  _Authenticated authenticated(User user) {
+    return _Authenticated(
+      user,
+    );
   }
 }
 
@@ -40,21 +42,21 @@ mixin _$AppStartupState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialize,
     required TResult Function() unauthenticated,
-    required TResult Function() authenticated,
+    required TResult Function(User user) authenticated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialize,
     TResult Function()? unauthenticated,
-    TResult Function()? authenticated,
+    TResult Function(User user)? authenticated,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialize,
     TResult Function()? unauthenticated,
-    TResult Function()? authenticated,
+    TResult Function(User user)? authenticated,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -120,12 +122,18 @@ class __$InitializeCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Initialize implements _Initialize {
+class _$_Initialize with DiagnosticableTreeMixin implements _Initialize {
   const _$_Initialize();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AppStartupState.initialize()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties..add(DiagnosticsProperty('type', 'AppStartupState.initialize'));
   }
 
   @override
@@ -142,7 +150,7 @@ class _$_Initialize implements _Initialize {
   TResult when<TResult extends Object?>({
     required TResult Function() initialize,
     required TResult Function() unauthenticated,
-    required TResult Function() authenticated,
+    required TResult Function(User user) authenticated,
   }) {
     return initialize();
   }
@@ -152,7 +160,7 @@ class _$_Initialize implements _Initialize {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialize,
     TResult Function()? unauthenticated,
-    TResult Function()? authenticated,
+    TResult Function(User user)? authenticated,
   }) {
     return initialize?.call();
   }
@@ -162,7 +170,7 @@ class _$_Initialize implements _Initialize {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialize,
     TResult Function()? unauthenticated,
-    TResult Function()? authenticated,
+    TResult Function(User user)? authenticated,
     required TResult orElse(),
   }) {
     if (initialize != null) {
@@ -231,12 +239,21 @@ class __$UnauthenticatedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Unauthenticated implements _Unauthenticated {
+class _$_Unauthenticated
+    with DiagnosticableTreeMixin
+    implements _Unauthenticated {
   const _$_Unauthenticated();
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'AppStartupState.unauthenticated()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AppStartupState.unauthenticated'));
   }
 
   @override
@@ -253,7 +270,7 @@ class _$_Unauthenticated implements _Unauthenticated {
   TResult when<TResult extends Object?>({
     required TResult Function() initialize,
     required TResult Function() unauthenticated,
-    required TResult Function() authenticated,
+    required TResult Function(User user) authenticated,
   }) {
     return unauthenticated();
   }
@@ -263,7 +280,7 @@ class _$_Unauthenticated implements _Unauthenticated {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialize,
     TResult Function()? unauthenticated,
-    TResult Function()? authenticated,
+    TResult Function(User user)? authenticated,
   }) {
     return unauthenticated?.call();
   }
@@ -273,7 +290,7 @@ class _$_Unauthenticated implements _Unauthenticated {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialize,
     TResult Function()? unauthenticated,
-    TResult Function()? authenticated,
+    TResult Function(User user)? authenticated,
     required TResult orElse(),
   }) {
     if (unauthenticated != null) {
@@ -326,6 +343,7 @@ abstract class _$AuthenticatedCopyWith<$Res> {
   factory _$AuthenticatedCopyWith(
           _Authenticated value, $Res Function(_Authenticated) then) =
       __$AuthenticatedCopyWithImpl<$Res>;
+  $Res call({User user});
 }
 
 /// @nodoc
@@ -338,35 +356,66 @@ class __$AuthenticatedCopyWithImpl<$Res>
 
   @override
   _Authenticated get _value => super._value as _Authenticated;
+
+  @override
+  $Res call({
+    Object? user = freezed,
+  }) {
+    return _then(_Authenticated(
+      user == freezed
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User,
+    ));
+  }
 }
 
 /// @nodoc
 
-class _$_Authenticated implements _Authenticated {
-  const _$_Authenticated();
+class _$_Authenticated with DiagnosticableTreeMixin implements _Authenticated {
+  const _$_Authenticated(this.user);
 
   @override
-  String toString() {
-    return 'AppStartupState.authenticated()';
+  final User user;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AppStartupState.authenticated(user: $user)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AppStartupState.authenticated'))
+      ..add(DiagnosticsProperty('user', user));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _Authenticated);
+        (other.runtimeType == runtimeType &&
+            other is _Authenticated &&
+            const DeepCollectionEquality().equals(other.user, user));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(user));
+
+  @JsonKey(ignore: true)
+  @override
+  _$AuthenticatedCopyWith<_Authenticated> get copyWith =>
+      __$AuthenticatedCopyWithImpl<_Authenticated>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initialize,
     required TResult Function() unauthenticated,
-    required TResult Function() authenticated,
+    required TResult Function(User user) authenticated,
   }) {
-    return authenticated();
+    return authenticated(user);
   }
 
   @override
@@ -374,9 +423,9 @@ class _$_Authenticated implements _Authenticated {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialize,
     TResult Function()? unauthenticated,
-    TResult Function()? authenticated,
+    TResult Function(User user)? authenticated,
   }) {
-    return authenticated?.call();
+    return authenticated?.call(user);
   }
 
   @override
@@ -384,11 +433,11 @@ class _$_Authenticated implements _Authenticated {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialize,
     TResult Function()? unauthenticated,
-    TResult Function()? authenticated,
+    TResult Function(User user)? authenticated,
     required TResult orElse(),
   }) {
     if (authenticated != null) {
-      return authenticated();
+      return authenticated(user);
     }
     return orElse();
   }
@@ -429,5 +478,10 @@ class _$_Authenticated implements _Authenticated {
 }
 
 abstract class _Authenticated implements AppStartupState {
-  const factory _Authenticated() = _$_Authenticated;
+  const factory _Authenticated(User user) = _$_Authenticated;
+
+  User get user;
+  @JsonKey(ignore: true)
+  _$AuthenticatedCopyWith<_Authenticated> get copyWith =>
+      throw _privateConstructorUsedError;
 }

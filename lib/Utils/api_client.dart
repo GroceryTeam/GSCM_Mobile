@@ -1,23 +1,33 @@
 import 'dart:io';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-
-final request = MyRequest().request;
+import 'package:dio/dio.dart';
 
 class MyRequest {
   late Dio _inner;
 
   MyRequest() {
     BaseOptions options = BaseOptions(
-      baseUrl: '',
-      contentType: 'application/json',
+      baseUrl: 'https://grocerycloudapi.azurewebsites.net/api/v1.0/store-owner/',
+      headers: {
+        Headers.contentTypeHeader: 'application/json',
+      }
     );
     _inner = Dio(options);
     _inner.interceptors.add(CustomInterceptors());
   }
 
   Dio get request => _inner;
+
+  void setBearerToken(String token) {
+    _inner.options.headers['Authorization'] = 'Bearer $token';
+  }
+}
+
+final myRequest = MyRequest();
+final request = myRequest.request;
+
+class WrongUsernamePasswordException implements Exception {
+  String message = 'Tên tài khoản hoặc mật khẩu không đúng';
 }
 
 class CustomInterceptors extends Interceptor {

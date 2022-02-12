@@ -11,6 +11,7 @@ const kDangerColor200 = Color(0xFFFD938D);
 const kDangerColor100 = Color(0xFFFED3D1);
 const kBlack = Colors.black;
 const kWhite = Colors.white;
+const kOrange = Color(0xFFFFA700);
 
 const kInputTitleTextStyle = TextStyle(
   fontSize: 17,

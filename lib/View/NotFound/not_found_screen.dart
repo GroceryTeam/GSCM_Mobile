@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
+import 'package:gscm_store_owner/Constant/app_route.dart';
 import 'package:gscm_store_owner/ViewModel/AppStartUp/app_startup_notifier.dart';
 
 class NotFoundScreen extends ConsumerWidget {
@@ -15,7 +17,10 @@ class NotFoundScreen extends ConsumerWidget {
             child: Text('Logged In'),
           ),
           ElevatedButton(
-            onPressed: () => ref.read(appStartupProvider.notifier).logout(),
+            onPressed: () {
+              Get.until((route) => Get.currentRoute == AppRoute.appStartup);
+              ref.read(appStartupProvider.notifier).logout();
+            },
             child: const Text('Logout'),
           ),
         ],

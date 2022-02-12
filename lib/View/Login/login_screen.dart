@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
+
+import 'package:gscm_store_owner/Utils/api_client.dart';
 import 'package:gscm_store_owner/ViewModel/AppStartUp/app_startup_notifier.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
@@ -50,10 +53,21 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     'Tiếp tục',
                     style: TextStyle(fontSize: 20, color: kWhite),
                   ),
-                  onTap: () {
-                    if(loginForm.valid) {
-                      debugPrint('form valid');
-                      ref.read(appStartupProvider.notifier).login();
+                  onTap: () async {
+                    if (loginForm.valid) {
+                      String username = loginForm.control('username').value;
+                      String password = loginForm.control('password').value;
+                      try {
+                        bool result = await ref.read(appStartupProvider.notifier).login(username, password);
+                        if(result) {
+                          Get.back();
+                        }
+                        else {
+                          throw WrongUsernamePasswordException();
+                        }
+                      } on WrongUsernamePasswordException {
+                        Get.snackbar('', 'Tên đăng nhập hoặc mật khẩu không đúng');
+                      }
                     }
                   }),
               Row(
@@ -73,8 +87,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ),
                     onPressed: () {},
                     style: TextButton.styleFrom(
-                      splashFactory: NoSplash.splashFactory
-                    ),
+                        splashFactory: NoSplash.splashFactory),
                   ),
                 ],
               )
