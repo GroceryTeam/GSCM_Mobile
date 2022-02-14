@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:gscm_store_owner/Constant/app_route.dart';
 import 'package:gscm_store_owner/ViewModel/AppStartUp/app_startup_notifier.dart';
+import 'package:gscm_store_owner/ViewModel/Brand/brand_notifier.dart';
 
 class NotFoundScreen extends ConsumerWidget {
   const NotFoundScreen({Key? key}) : super(key: key);
@@ -22,6 +23,13 @@ class NotFoundScreen extends ConsumerWidget {
               ref.read(appStartupProvider.notifier).logout();
             },
             child: const Text('Logout'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Get.back();
+              ref.read(brandNotifierProvider.notifier).selectBrand();
+            },
+            child: const Text('Choose brand'),
           ),
         ],
       ),

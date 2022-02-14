@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gscm_store_owner/View/Brand/brand_loading.dart';
 import 'package:gscm_store_owner/View/Brand/brand_selection.dart';
 import 'package:gscm_store_owner/View/NotFound/not_found_screen.dart';
+import 'package:gscm_store_owner/View/Product/product_list_screen.dart';
 import 'package:gscm_store_owner/ViewModel/Brand/brand_notifier.dart';
 
 class BrandPage extends ConsumerWidget {
@@ -14,7 +15,7 @@ class BrandPage extends ConsumerWidget {
     return brandState.when(
       initialize: () => const BrandLoading(),
       needSelection: (workingBrands, stoppedBrands) => const BrandSelection(),
-      selected: (currentBrand) => const NotFoundScreen(),
+      selected: (currentBrand) => const ProductListScreen(),
     );
   }
 }

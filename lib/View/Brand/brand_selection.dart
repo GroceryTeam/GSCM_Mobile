@@ -80,6 +80,7 @@ class _BrandSelectionState extends ConsumerState<BrandSelection> {
                         onPressed: () {},
                       ),
                       FloatingActionButton(
+                        splashColor: Colors.transparent,
                         onPressed: () {
                           if (selectedBrandId != -1) {
                             Brand selectedBrand = workingBrands
