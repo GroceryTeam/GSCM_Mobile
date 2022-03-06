@@ -43,11 +43,12 @@ class _ReceiptTabState extends ConsumerState<ReceiptTab> {
             ),
             noData: (startDate, endDate) =>
                 const Center(child: Text('Không có dữ liệu')),
-            data: (bills, receipts, startDate, endDate) {
+            data: (bills, receipts, startDate, endDate, stores, chosenStore) {
               if (receipts.isEmpty) {
                 return const Center(child: Text('Không có dữ liệu'));
               }
               return ListView.separated(
+                key: const PageStorageKey<String>('receiptList'),
                 controller: _scrollController,
                 itemCount: receipts.length,
                 separatorBuilder: (context, index) =>
@@ -63,8 +64,7 @@ class _ReceiptTabState extends ConsumerState<ReceiptTab> {
                   return SizedBox(
                     height: 70,
                     child: ListTile(
-                      contentPadding:
-                          const EdgeInsets.fromLTRB(12, 8, 12, 16),
+                      contentPadding: const EdgeInsets.fromLTRB(12, 8, 12, 16),
                       title: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -78,8 +78,7 @@ class _ReceiptTabState extends ConsumerState<ReceiptTab> {
                                 const SizedBox(height: 8),
                                 Text(
                                   dateCreated,
-                                  style: const TextStyle(
-                                      fontSize: 14, color: kNeutralColor),
+                                  style: kListTileSecondaryText,
                                 ),
                               ],
                             ),
@@ -92,15 +91,12 @@ class _ReceiptTabState extends ConsumerState<ReceiptTab> {
                               children: [
                                 Text(
                                   totalCost,
-                                  style: const TextStyle(
-                                    color: kPrimaryColor,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                                  style: kListTileMoneyText,
                                 ),
                                 const Text(
-                                'Nhập',
-                                style: TextStyle(fontWeight: FontWeight.w600),
-                              ),
+                                  'Nhập',
+                                  style: kListTilePrimaryText,
+                                ),
                               ],
                             ),
                           ),

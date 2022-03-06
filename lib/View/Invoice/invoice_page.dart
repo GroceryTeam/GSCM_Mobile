@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gscm_store_owner/Accessories/shimmer_block.dart';
 import 'package:gscm_store_owner/Constant/app_theme.dart';
 import 'package:gscm_store_owner/Model/store.dart';
 import 'package:gscm_store_owner/View/Invoice/bill_tab.dart';
@@ -22,7 +23,8 @@ class InvoicePage extends StatelessWidget {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -49,15 +51,15 @@ class InvoicePage extends StatelessWidget {
                           child: Container(
                             height: 30,
                             decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(6)
-                            ),
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(6)),
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: Center(
                               child: Text(
                                 invoiceState.when(
                                   loading: () => 'dd/mm/yyyy - dd/mm/yyyy',
-                                  data: (bills, receipts, startDate, endDate) =>
+                                  data: (bills, receipts, startDate, endDate,
+                                          stores, chosenStore) =>
                                       '${startDate.day}/${startDate.month}/${startDate.year} - ${endDate.day}/${endDate.month}/${endDate.year}',
                                   noData: (startDate, endDate) =>
                                       '${startDate.day}/${startDate.month}/${startDate.year} - ${endDate.day}/${endDate.month}/${endDate.year}',
@@ -72,7 +74,8 @@ class InvoicePage extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -83,17 +86,27 @@ class InvoicePage extends StatelessWidget {
                     const SizedBox(width: 10),
                     Consumer(
                       builder: (context, ref, child) {
-                        final stores = ref.watch(storeProvider);
-                        return DropdownButton(
-                          items: stores
-                              .map((store) => DropdownMenuItem<Store>(
-                                    value: store,
-                                    child: Text(store.name, style: const  TextStyle(color: kBlack),),
-                                  ))
-                              .toList(),
-                          onChanged: (store) => ref
-                              .read(invoiceProvider.notifier)
-                              .setStoreId((store as Store).id),
+                        final invoiceState = ref.watch(invoiceProvider);
+                        return invoiceState.maybeWhen(
+                          orElse: () =>
+                              const ShimmerBlock(width: 80, height: 30),
+                          data: (bills, receipts, startDate, endDate, stores,
+                              chosenStore) {
+                            return DropdownButton(
+                              value: chosenStore,
+                              items: stores
+                                  .map(
+                                    (store) => DropdownMenuItem(
+                                      value: store,
+                                      child: Text(store.name),
+                                    ),
+                                  )
+                                  .toList(),
+                              onChanged: (Store? value) {
+                                ref.read(invoiceProvider.notifier).setChosenStore(value!);
+                              },
+                            );
+                          },
                         );
                       },
                     ),

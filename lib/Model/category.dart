@@ -13,4 +13,9 @@ class Category {
       name: json['name'],
     );
   }
+
+  @override
+  String toString() {
+    return 'Id: $id, name: $name';
+  }
 }

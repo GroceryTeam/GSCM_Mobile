@@ -15,7 +15,7 @@ final brandNotifierProvider =
   );
 });
 
-final storeProvider = Provider<List<Store>>((ref) {
+final storeProvider = StateProvider<List<Store>>((ref) {
   List<Store> storeList = [];
   final brandState = ref.watch(brandNotifierProvider);
   brandState.maybeWhen(

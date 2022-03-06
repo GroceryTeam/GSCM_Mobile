@@ -26,12 +26,16 @@ class _$InvoiceStateTearOff {
       {required List<Bill> bills,
       required List<Receipt> receipts,
       required DateTime startDate,
-      required DateTime endDate}) {
+      required DateTime endDate,
+      required List<Store> stores,
+      required Store chosenStore}) {
     return _Data(
       bills: bills,
       receipts: receipts,
       startDate: startDate,
       endDate: endDate,
+      stores: stores,
+      chosenStore: chosenStore,
     );
   }
 
@@ -51,8 +55,13 @@ mixin _$InvoiceState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<Bill> bills, List<Receipt> receipts,
-            DateTime startDate, DateTime endDate)
+    required TResult Function(
+            List<Bill> bills,
+            List<Receipt> receipts,
+            DateTime startDate,
+            DateTime endDate,
+            List<Store> stores,
+            Store chosenStore)
         data,
     required TResult Function(DateTime startDate, DateTime enddate) noData,
   }) =>
@@ -60,8 +69,13 @@ mixin _$InvoiceState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Bill> bills, List<Receipt> receipts,
-            DateTime startDate, DateTime endDate)?
+    TResult Function(
+            List<Bill> bills,
+            List<Receipt> receipts,
+            DateTime startDate,
+            DateTime endDate,
+            List<Store> stores,
+            Store chosenStore)?
         data,
     TResult Function(DateTime startDate, DateTime enddate)? noData,
   }) =>
@@ -69,8 +83,13 @@ mixin _$InvoiceState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Bill> bills, List<Receipt> receipts,
-            DateTime startDate, DateTime endDate)?
+    TResult Function(
+            List<Bill> bills,
+            List<Receipt> receipts,
+            DateTime startDate,
+            DateTime endDate,
+            List<Store> stores,
+            Store chosenStore)?
         data,
     TResult Function(DateTime startDate, DateTime enddate)? noData,
     required TResult orElse(),
@@ -161,8 +180,13 @@ class _$_Loading with DiagnosticableTreeMixin implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<Bill> bills, List<Receipt> receipts,
-            DateTime startDate, DateTime endDate)
+    required TResult Function(
+            List<Bill> bills,
+            List<Receipt> receipts,
+            DateTime startDate,
+            DateTime endDate,
+            List<Store> stores,
+            Store chosenStore)
         data,
     required TResult Function(DateTime startDate, DateTime enddate) noData,
   }) {
@@ -173,8 +197,13 @@ class _$_Loading with DiagnosticableTreeMixin implements _Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Bill> bills, List<Receipt> receipts,
-            DateTime startDate, DateTime endDate)?
+    TResult Function(
+            List<Bill> bills,
+            List<Receipt> receipts,
+            DateTime startDate,
+            DateTime endDate,
+            List<Store> stores,
+            Store chosenStore)?
         data,
     TResult Function(DateTime startDate, DateTime enddate)? noData,
   }) {
@@ -185,8 +214,13 @@ class _$_Loading with DiagnosticableTreeMixin implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Bill> bills, List<Receipt> receipts,
-            DateTime startDate, DateTime endDate)?
+    TResult Function(
+            List<Bill> bills,
+            List<Receipt> receipts,
+            DateTime startDate,
+            DateTime endDate,
+            List<Store> stores,
+            Store chosenStore)?
         data,
     TResult Function(DateTime startDate, DateTime enddate)? noData,
     required TResult orElse(),
@@ -244,7 +278,9 @@ abstract class _$DataCopyWith<$Res> {
       {List<Bill> bills,
       List<Receipt> receipts,
       DateTime startDate,
-      DateTime endDate});
+      DateTime endDate,
+      List<Store> stores,
+      Store chosenStore});
 }
 
 /// @nodoc
@@ -262,6 +298,8 @@ class __$DataCopyWithImpl<$Res> extends _$InvoiceStateCopyWithImpl<$Res>
     Object? receipts = freezed,
     Object? startDate = freezed,
     Object? endDate = freezed,
+    Object? stores = freezed,
+    Object? chosenStore = freezed,
   }) {
     return _then(_Data(
       bills: bills == freezed
@@ -280,6 +318,14 @@ class __$DataCopyWithImpl<$Res> extends _$InvoiceStateCopyWithImpl<$Res>
           ? _value.endDate
           : endDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      stores: stores == freezed
+          ? _value.stores
+          : stores // ignore: cast_nullable_to_non_nullable
+              as List<Store>,
+      chosenStore: chosenStore == freezed
+          ? _value.chosenStore
+          : chosenStore // ignore: cast_nullable_to_non_nullable
+              as Store,
     ));
   }
 }
@@ -291,7 +337,9 @@ class _$_Data with DiagnosticableTreeMixin implements _Data {
       {required this.bills,
       required this.receipts,
       required this.startDate,
-      required this.endDate});
+      required this.endDate,
+      required this.stores,
+      required this.chosenStore});
 
   @override
   final List<Bill> bills;
@@ -301,10 +349,14 @@ class _$_Data with DiagnosticableTreeMixin implements _Data {
   final DateTime startDate;
   @override
   final DateTime endDate;
+  @override
+  final List<Store> stores;
+  @override
+  final Store chosenStore;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'InvoiceState.data(bills: $bills, receipts: $receipts, startDate: $startDate, endDate: $endDate)';
+    return 'InvoiceState.data(bills: $bills, receipts: $receipts, startDate: $startDate, endDate: $endDate, stores: $stores, chosenStore: $chosenStore)';
   }
 
   @override
@@ -315,7 +367,9 @@ class _$_Data with DiagnosticableTreeMixin implements _Data {
       ..add(DiagnosticsProperty('bills', bills))
       ..add(DiagnosticsProperty('receipts', receipts))
       ..add(DiagnosticsProperty('startDate', startDate))
-      ..add(DiagnosticsProperty('endDate', endDate));
+      ..add(DiagnosticsProperty('endDate', endDate))
+      ..add(DiagnosticsProperty('stores', stores))
+      ..add(DiagnosticsProperty('chosenStore', chosenStore));
   }
 
   @override
@@ -326,7 +380,10 @@ class _$_Data with DiagnosticableTreeMixin implements _Data {
             const DeepCollectionEquality().equals(other.bills, bills) &&
             const DeepCollectionEquality().equals(other.receipts, receipts) &&
             const DeepCollectionEquality().equals(other.startDate, startDate) &&
-            const DeepCollectionEquality().equals(other.endDate, endDate));
+            const DeepCollectionEquality().equals(other.endDate, endDate) &&
+            const DeepCollectionEquality().equals(other.stores, stores) &&
+            const DeepCollectionEquality()
+                .equals(other.chosenStore, chosenStore));
   }
 
   @override
@@ -335,7 +392,9 @@ class _$_Data with DiagnosticableTreeMixin implements _Data {
       const DeepCollectionEquality().hash(bills),
       const DeepCollectionEquality().hash(receipts),
       const DeepCollectionEquality().hash(startDate),
-      const DeepCollectionEquality().hash(endDate));
+      const DeepCollectionEquality().hash(endDate),
+      const DeepCollectionEquality().hash(stores),
+      const DeepCollectionEquality().hash(chosenStore));
 
   @JsonKey(ignore: true)
   @override
@@ -346,38 +405,53 @@ class _$_Data with DiagnosticableTreeMixin implements _Data {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<Bill> bills, List<Receipt> receipts,
-            DateTime startDate, DateTime endDate)
+    required TResult Function(
+            List<Bill> bills,
+            List<Receipt> receipts,
+            DateTime startDate,
+            DateTime endDate,
+            List<Store> stores,
+            Store chosenStore)
         data,
     required TResult Function(DateTime startDate, DateTime enddate) noData,
   }) {
-    return data(bills, receipts, startDate, endDate);
+    return data(bills, receipts, startDate, endDate, stores, chosenStore);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Bill> bills, List<Receipt> receipts,
-            DateTime startDate, DateTime endDate)?
+    TResult Function(
+            List<Bill> bills,
+            List<Receipt> receipts,
+            DateTime startDate,
+            DateTime endDate,
+            List<Store> stores,
+            Store chosenStore)?
         data,
     TResult Function(DateTime startDate, DateTime enddate)? noData,
   }) {
-    return data?.call(bills, receipts, startDate, endDate);
+    return data?.call(bills, receipts, startDate, endDate, stores, chosenStore);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Bill> bills, List<Receipt> receipts,
-            DateTime startDate, DateTime endDate)?
+    TResult Function(
+            List<Bill> bills,
+            List<Receipt> receipts,
+            DateTime startDate,
+            DateTime endDate,
+            List<Store> stores,
+            Store chosenStore)?
         data,
     TResult Function(DateTime startDate, DateTime enddate)? noData,
     required TResult orElse(),
   }) {
     if (data != null) {
-      return data(bills, receipts, startDate, endDate);
+      return data(bills, receipts, startDate, endDate, stores, chosenStore);
     }
     return orElse();
   }
@@ -422,12 +496,16 @@ abstract class _Data implements InvoiceState {
       {required List<Bill> bills,
       required List<Receipt> receipts,
       required DateTime startDate,
-      required DateTime endDate}) = _$_Data;
+      required DateTime endDate,
+      required List<Store> stores,
+      required Store chosenStore}) = _$_Data;
 
   List<Bill> get bills;
   List<Receipt> get receipts;
   DateTime get startDate;
   DateTime get endDate;
+  List<Store> get stores;
+  Store get chosenStore;
   @JsonKey(ignore: true)
   _$DataCopyWith<_Data> get copyWith => throw _privateConstructorUsedError;
 }
@@ -514,8 +592,13 @@ class _$_NoData with DiagnosticableTreeMixin implements _NoData {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function(List<Bill> bills, List<Receipt> receipts,
-            DateTime startDate, DateTime endDate)
+    required TResult Function(
+            List<Bill> bills,
+            List<Receipt> receipts,
+            DateTime startDate,
+            DateTime endDate,
+            List<Store> stores,
+            Store chosenStore)
         data,
     required TResult Function(DateTime startDate, DateTime enddate) noData,
   }) {
@@ -526,8 +609,13 @@ class _$_NoData with DiagnosticableTreeMixin implements _NoData {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Bill> bills, List<Receipt> receipts,
-            DateTime startDate, DateTime endDate)?
+    TResult Function(
+            List<Bill> bills,
+            List<Receipt> receipts,
+            DateTime startDate,
+            DateTime endDate,
+            List<Store> stores,
+            Store chosenStore)?
         data,
     TResult Function(DateTime startDate, DateTime enddate)? noData,
   }) {
@@ -538,8 +626,13 @@ class _$_NoData with DiagnosticableTreeMixin implements _NoData {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function(List<Bill> bills, List<Receipt> receipts,
-            DateTime startDate, DateTime endDate)?
+    TResult Function(
+            List<Bill> bills,
+            List<Receipt> receipts,
+            DateTime startDate,
+            DateTime endDate,
+            List<Store> stores,
+            Store chosenStore)?
         data,
     TResult Function(DateTime startDate, DateTime enddate)? noData,
     required TResult orElse(),

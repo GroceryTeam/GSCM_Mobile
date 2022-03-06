@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gscm_store_owner/Api/invoice_api.dart';
+import 'package:gscm_store_owner/Api/store_api.dart';
 import 'package:gscm_store_owner/Constant/metadata.dart';
 import 'package:gscm_store_owner/Model/bill.dart';
 import 'package:gscm_store_owner/Model/receipt.dart';
@@ -11,10 +12,10 @@ import 'invoice_state.dart';
 final invoiceProvider =
     StateNotifierProvider<InvoiceNotifier, InvoiceState>((ref) {
   final brandState = ref.watch(brandNotifierProvider);
+  final stores = ref.watch(storeProvider);
   return brandState.maybeWhen(
     orElse: () => InvoiceNotifier(null, []),
     selected: (currentBrand) {
-      final stores = ref.watch(storeProvider);
       return InvoiceNotifier(currentBrand.id, stores);
     },
   );
@@ -25,9 +26,10 @@ class InvoiceNotifier extends StateNotifier<InvoiceState> {
   DateTime endDate = DateTime.now();
   DateTime startDate = DateTime.now().subtract(const Duration(days: 92));
   InvoiceService invoiceDAO = InvoiceService();
-  late List<Store> stores;
-  late int currentStoreId;
-  int pageIdexBill = Metadata.pageIndex;
+  StoreService storeDAO = StoreService();
+  List<Store> stores = [];
+  late Store chosenStore;
+  int pageIndexBill = Metadata.pageIndex;
   int pageIndexReceipt = Metadata.pageIndex;
   int totalPageBill = 1;
   int totalPageReceipt = 1;
@@ -36,13 +38,24 @@ class InvoiceNotifier extends StateNotifier<InvoiceState> {
 
   InvoiceNotifier(this.brandId, this.stores)
       : super(const InvoiceState.loading()) {
-    if (brandId != null && stores.isNotEmpty) {
-      currentStoreId = stores[0].id;
-      fetchInvoice();
-    } else {
-      debugPrint('invoice no data');
-      state = InvoiceState.noData(startDate, endDate);
+    if (brandId != null) {
+      init();
     }
+  }
+
+  void init() async {
+    await fetchStores();
+    if (stores.isEmpty) {
+      state = InvoiceState.noData(startDate, endDate);
+    } else {
+      chosenStore = stores[0];
+      fetchInvoice();
+    }
+  }
+
+  Future<void> fetchStores() async {
+    final res = await storeDAO.fetchStores(brandId!) as List;
+    stores = res.map((store) => Store.fromJson(store)).toList();
   }
 
   void setDateRange(DateTimeRange range) {
@@ -51,69 +64,78 @@ class InvoiceNotifier extends StateNotifier<InvoiceState> {
     fetchInvoice();
   }
 
-  void setStoreId(int storeId) {
-    currentStoreId = storeId;
+  void setChosenStore(Store chosenStore) {
+    this.chosenStore = chosenStore;
     fetchInvoice();
   }
 
-  void fetchInvoice() {
-    fetchBill(currentStoreId);
-    fetchReceipt(currentStoreId);
+  void fetchInvoice() async {
+    await fetchBill(chosenStore.id);
+    await fetchReceipt(chosenStore.id);
     state = InvoiceState.data(
       bills: bills,
       receipts: receipts,
       startDate: startDate,
       endDate: endDate,
+      stores: stores,
+      chosenStore: chosenStore,
     );
   }
 
-  void fetchBill(int storeId) async {
+  Future<void> fetchBill(int storeId) async {
     final billRes = await invoiceDAO.fetchBill(
       storeId: storeId,
       startDate: startDate,
       endDate: endDate,
+      pageIndex: pageIndexBill,
     );
-    pageIdexBill = billRes['pageIndex'] as int;
+    pageIndexBill = billRes['pageIndex'] as int;
     totalPageBill = billRes['totalPage'] as int;
-    bills =
-        (billRes['data'] as List).map((bill) => Bill.fromJson(bill)).toList();
+    bills.addAll((billRes['data'] as List)
+        .map((bill) => Bill.fromJson(bill))
+        .toList());
   }
 
-  void fetchReceipt(int storeId) async {
+  Future<void> fetchReceipt(int storeId) async {
     final receiptRes = await invoiceDAO.fetchReceipt(
       startDate: startDate,
       endDate: endDate,
       storeId: storeId,
+      pageIndex: pageIndexReceipt,
     );
     pageIndexReceipt = receiptRes['pageIndex'];
     totalPageReceipt = receiptRes['totalPage'];
-    receipts = (receiptRes['data'] as List)
+    receipts.addAll((receiptRes['data'] as List)
         .map((receipt) => Receipt.fromJson(receipt))
-        .toList();
+        .toList());
   }
 
-  void fetchMoreBill() {
-    if (pageIdexBill <= totalPageBill) {
-      ++pageIdexBill;
-      fetchBill(currentStoreId);
+  void fetchMoreBill() async {
+    if (pageIndexBill < totalPageBill) {
+      ++pageIndexBill;
+      await fetchBill(chosenStore.id);
       state = InvoiceState.data(
         bills: bills,
         receipts: receipts,
         startDate: startDate,
         endDate: endDate,
+        stores: stores,
+        chosenStore: chosenStore,
       );
     }
   }
 
-  void fetchMoreReceipt() {
-    if (pageIndexReceipt <= totalPageReceipt) {
+  void fetchMoreReceipt() async {
+    if (pageIndexReceipt < totalPageReceipt) {
       ++pageIndexReceipt;
-      fetchReceipt(currentStoreId);
+      await fetchReceipt(chosenStore.id);
       state = InvoiceState.data(
         bills: bills,
         receipts: receipts,
         startDate: startDate,
         endDate: endDate,
+        stores: stores,
+        chosenStore: chosenStore,
       );
     }
   }

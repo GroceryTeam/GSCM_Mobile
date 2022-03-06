@@ -18,6 +18,24 @@ const kInputTitleTextStyle = TextStyle(
   fontWeight: FontWeight.w600,
   color: kBlack,
 );
+
+const kListTileMoneyText = TextStyle(
+  fontWeight: FontWeight.w600,
+  color: kPrimaryColor,
+  textBaseline: TextBaseline.alphabetic,
+);
+
+const kListTilePrimaryText = TextStyle(
+  fontWeight: FontWeight.w600,
+  textBaseline: TextBaseline.alphabetic,
+);
+
+const kListTileSecondaryText = TextStyle(
+  fontSize: 14,
+  color: kNeutralColor,
+  textBaseline: TextBaseline.alphabetic,
+);
+
 const kTextInputDecoration = InputDecoration(
   enabledBorder: kInputBorder,
   focusedBorder: kInputBorder,
@@ -27,8 +45,9 @@ const kTextInputDecoration = InputDecoration(
   errorStyle: TextStyle(
     color: kDangerColor,
     fontSize: 14,
-  )
+  ),
 );
+
 const kInputBorder = OutlineInputBorder(
   borderRadius: BorderRadius.only(
     topLeft: Radius.circular(14),

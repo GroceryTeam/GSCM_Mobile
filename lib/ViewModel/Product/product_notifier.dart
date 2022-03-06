@@ -92,7 +92,7 @@ class ProductNotifier extends StateNotifier<ProductState> {
     final res = await productDAO.fetchProducts(
       brandId: brandId!,
       searchTerm: searchTerm,
-      categoryId: categoryId,
+      categoryId: (categoryId != -1) ? categoryId : null,
     );
     totalPage = res['totalPage'] as int;
     pageIndex = res['pageIndex'] as int;

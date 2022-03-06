@@ -42,11 +42,12 @@ class _BillTabState extends ConsumerState<BillTab> {
           ),
           noData: (startDate, endDate) =>
               const Center(child: Text('Không có dữ liệu')),
-          data: (bills, receipts, startDate, endDate) {
+          data: (bills, receipts, startDate, endDate, stores, chosenStore) {
             if (bills.isEmpty) {
               return const Center(child: Text('Không có dữ liệu'));
             }
             return ListView.separated(
+              key: const PageStorageKey<String>('billList'),
               controller: _scrollController,
               itemCount: bills.length,
               separatorBuilder: (context, index) =>
@@ -77,18 +78,12 @@ class _BillTabState extends ConsumerState<BillTab> {
                               const SizedBox(height: 6),
                               Text(
                                 cashierName,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: kNeutralColor,
-                                ),
+                                style: kListTileSecondaryText,
                               ),
                               const SizedBox(height: 6),
                               Text(
                                 dateCreated,
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  color: kNeutralColor,
-                                ),
+                                style: kListTileSecondaryText,
                               ),
                             ],
                           ),
@@ -102,14 +97,11 @@ class _BillTabState extends ConsumerState<BillTab> {
                             children: [
                               Text(
                                 totalPrice,
-                                style: const TextStyle(
-                                  color: kPrimaryColor,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                style: kListTileMoneyText,
                               ),
                               const Text(
                                 'Bán',
-                                style: TextStyle(fontWeight: FontWeight.w600),
+                                style: kListTilePrimaryText,
                               ),
                             ],
                           ),
