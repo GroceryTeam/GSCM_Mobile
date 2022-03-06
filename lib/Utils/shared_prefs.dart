@@ -44,3 +44,8 @@ Future<void> deleteUser() async {
   prefs.remove('userPhone');
   prefs.remove('userUsername');
 }
+
+Future<bool> setFCMToken(String fcmToken) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  return await prefs.setString('fcm', fcmToken);
+}

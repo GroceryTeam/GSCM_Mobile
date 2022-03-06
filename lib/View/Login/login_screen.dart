@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:gscm_store_owner/Utils/api_client.dart';
 import 'package:gscm_store_owner/ViewModel/AppStartUp/app_startup_notifier.dart';
@@ -33,6 +34,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.grey[200],
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 32, right: 32, bottom: 20),
@@ -46,30 +48,55 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               _buildLoginForm(),
               const Spacer(),
               MainButton(
-                  height: 50,
-                  width: double.infinity,
-                  bgColor: kPrimaryColor,
-                  text: const Text(
-                    'Tiếp tục',
-                    style: TextStyle(fontSize: 20, color: kWhite),
-                  ),
-                  onTap: () async {
-                    if (loginForm.valid) {
-                      String username = loginForm.control('username').value;
-                      String password = loginForm.control('password').value;
-                      try {
-                        bool result = await ref.read(appStartupProvider.notifier).login(username, password);
-                        if(result) {
-                          Get.back();
-                        }
-                        else {
-                          throw WrongUsernamePasswordException();
-                        }
-                      } on WrongUsernamePasswordException {
-                        Get.snackbar('', 'Tên đăng nhập hoặc mật khẩu không đúng');
+                height: 50,
+                width: double.infinity,
+                bgColor: kPrimaryColor,
+                text: const Text(
+                  'Tiếp tục',
+                  style: TextStyle(fontSize: 20, color: kWhite),
+                ),
+                onTap: () async {
+                  if (loginForm.valid) {
+                    String username = loginForm.control('username').value;
+                    String password = loginForm.control('password').value;
+                    try {
+                      bool result = await ref
+                          .read(appStartupProvider.notifier)
+                          .login(username, password);
+                      if (result) {
+                        Get.back();
+                      } else {
+                        throw WrongUsernamePasswordException();
                       }
+                    } on WrongUsernamePasswordException {
+                      Get.snackbar(
+                          '', 'Tên đăng nhập hoặc mật khẩu không đúng');
                     }
-                  }),
+                  }
+                },
+              ),
+              const SizedBox(height: 12),
+              MainButton(
+                height: 50,
+                width: double.infinity,
+                bgColor: kSecondaryColor,
+                text: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: const [
+                    Text(
+                      'Đăng nhập bằng Google',
+                      style: TextStyle(fontSize: 19, color: kBlack),
+                    ),
+                    SizedBox(width: 8),
+                    FaIcon(FontAwesomeIcons.google, color: kDangerColor200),
+                  ],
+                ),
+                onTap: () async {
+                  await ref.read(appStartupProvider.notifier).loginFirebase();
+                  Get.back();
+                },
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

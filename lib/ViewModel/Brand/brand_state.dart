@@ -7,9 +7,6 @@ part 'brand_state.freezed.dart';
 @freezed
 class BrandState with _$BrandState {
   const factory BrandState.initialize() = _Initialize;
-  const factory BrandState.needSelection(
-    List<Brand> workingBrands,
-    List<Brand> stoppedBrands,
-  ) = _NeedSelection;
+  const factory BrandState.needSelection(List<Brand> workingBrands) =_NeedSelection;
   const factory BrandState.selected(Brand currentBrand) = _Selected;
 }

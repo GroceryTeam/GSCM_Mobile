@@ -11,9 +11,9 @@ class Brand {
 
   factory Brand.fromJson(Map<String, dynamic> json) {
     return Brand(
-      id: json['id'],
-      name: json['name'],
-      status: json['status'],
+      id: json['id'] as int,
+      name: json['name'] as String,
+      status: json['status'] as int,
     );
   }
 }

@@ -22,11 +22,9 @@ class _$BrandStateTearOff {
     return const _Initialize();
   }
 
-  _NeedSelection needSelection(
-      List<Brand> workingBrands, List<Brand> stoppedBrands) {
+  _NeedSelection needSelection(List<Brand> workingBrands) {
     return _NeedSelection(
       workingBrands,
-      stoppedBrands,
     );
   }
 
@@ -45,25 +43,21 @@ mixin _$BrandState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initialize,
-    required TResult Function(
-            List<Brand> workingBrands, List<Brand> stoppedBrands)
-        needSelection,
+    required TResult Function(List<Brand> workingBrands) needSelection,
     required TResult Function(Brand currentBrand) selected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialize,
-    TResult Function(List<Brand> workingBrands, List<Brand> stoppedBrands)?
-        needSelection,
+    TResult Function(List<Brand> workingBrands)? needSelection,
     TResult Function(Brand currentBrand)? selected,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialize,
-    TResult Function(List<Brand> workingBrands, List<Brand> stoppedBrands)?
-        needSelection,
+    TResult Function(List<Brand> workingBrands)? needSelection,
     TResult Function(Brand currentBrand)? selected,
     required TResult orElse(),
   }) =>
@@ -155,9 +149,7 @@ class _$_Initialize with DiagnosticableTreeMixin implements _Initialize {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initialize,
-    required TResult Function(
-            List<Brand> workingBrands, List<Brand> stoppedBrands)
-        needSelection,
+    required TResult Function(List<Brand> workingBrands) needSelection,
     required TResult Function(Brand currentBrand) selected,
   }) {
     return initialize();
@@ -167,8 +159,7 @@ class _$_Initialize with DiagnosticableTreeMixin implements _Initialize {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialize,
-    TResult Function(List<Brand> workingBrands, List<Brand> stoppedBrands)?
-        needSelection,
+    TResult Function(List<Brand> workingBrands)? needSelection,
     TResult Function(Brand currentBrand)? selected,
   }) {
     return initialize?.call();
@@ -178,8 +169,7 @@ class _$_Initialize with DiagnosticableTreeMixin implements _Initialize {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialize,
-    TResult Function(List<Brand> workingBrands, List<Brand> stoppedBrands)?
-        needSelection,
+    TResult Function(List<Brand> workingBrands)? needSelection,
     TResult Function(Brand currentBrand)? selected,
     required TResult orElse(),
   }) {
@@ -233,7 +223,7 @@ abstract class _$NeedSelectionCopyWith<$Res> {
   factory _$NeedSelectionCopyWith(
           _NeedSelection value, $Res Function(_NeedSelection) then) =
       __$NeedSelectionCopyWithImpl<$Res>;
-  $Res call({List<Brand> workingBrands, List<Brand> stoppedBrands});
+  $Res call({List<Brand> workingBrands});
 }
 
 /// @nodoc
@@ -249,16 +239,11 @@ class __$NeedSelectionCopyWithImpl<$Res> extends _$BrandStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? workingBrands = freezed,
-    Object? stoppedBrands = freezed,
   }) {
     return _then(_NeedSelection(
       workingBrands == freezed
           ? _value.workingBrands
           : workingBrands // ignore: cast_nullable_to_non_nullable
-              as List<Brand>,
-      stoppedBrands == freezed
-          ? _value.stoppedBrands
-          : stoppedBrands // ignore: cast_nullable_to_non_nullable
               as List<Brand>,
     ));
   }
@@ -267,16 +252,14 @@ class __$NeedSelectionCopyWithImpl<$Res> extends _$BrandStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_NeedSelection with DiagnosticableTreeMixin implements _NeedSelection {
-  const _$_NeedSelection(this.workingBrands, this.stoppedBrands);
+  const _$_NeedSelection(this.workingBrands);
 
   @override
   final List<Brand> workingBrands;
-  @override
-  final List<Brand> stoppedBrands;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BrandState.needSelection(workingBrands: $workingBrands, stoppedBrands: $stoppedBrands)';
+    return 'BrandState.needSelection(workingBrands: $workingBrands)';
   }
 
   @override
@@ -284,8 +267,7 @@ class _$_NeedSelection with DiagnosticableTreeMixin implements _NeedSelection {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'BrandState.needSelection'))
-      ..add(DiagnosticsProperty('workingBrands', workingBrands))
-      ..add(DiagnosticsProperty('stoppedBrands', stoppedBrands));
+      ..add(DiagnosticsProperty('workingBrands', workingBrands));
   }
 
   @override
@@ -294,16 +276,12 @@ class _$_NeedSelection with DiagnosticableTreeMixin implements _NeedSelection {
         (other.runtimeType == runtimeType &&
             other is _NeedSelection &&
             const DeepCollectionEquality()
-                .equals(other.workingBrands, workingBrands) &&
-            const DeepCollectionEquality()
-                .equals(other.stoppedBrands, stoppedBrands));
+                .equals(other.workingBrands, workingBrands));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(workingBrands),
-      const DeepCollectionEquality().hash(stoppedBrands));
+      runtimeType, const DeepCollectionEquality().hash(workingBrands));
 
   @JsonKey(ignore: true)
   @override
@@ -314,36 +292,32 @@ class _$_NeedSelection with DiagnosticableTreeMixin implements _NeedSelection {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initialize,
-    required TResult Function(
-            List<Brand> workingBrands, List<Brand> stoppedBrands)
-        needSelection,
+    required TResult Function(List<Brand> workingBrands) needSelection,
     required TResult Function(Brand currentBrand) selected,
   }) {
-    return needSelection(workingBrands, stoppedBrands);
+    return needSelection(workingBrands);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialize,
-    TResult Function(List<Brand> workingBrands, List<Brand> stoppedBrands)?
-        needSelection,
+    TResult Function(List<Brand> workingBrands)? needSelection,
     TResult Function(Brand currentBrand)? selected,
   }) {
-    return needSelection?.call(workingBrands, stoppedBrands);
+    return needSelection?.call(workingBrands);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialize,
-    TResult Function(List<Brand> workingBrands, List<Brand> stoppedBrands)?
-        needSelection,
+    TResult Function(List<Brand> workingBrands)? needSelection,
     TResult Function(Brand currentBrand)? selected,
     required TResult orElse(),
   }) {
     if (needSelection != null) {
-      return needSelection(workingBrands, stoppedBrands);
+      return needSelection(workingBrands);
     }
     return orElse();
   }
@@ -384,11 +358,9 @@ class _$_NeedSelection with DiagnosticableTreeMixin implements _NeedSelection {
 }
 
 abstract class _NeedSelection implements BrandState {
-  const factory _NeedSelection(
-      List<Brand> workingBrands, List<Brand> stoppedBrands) = _$_NeedSelection;
+  const factory _NeedSelection(List<Brand> workingBrands) = _$_NeedSelection;
 
   List<Brand> get workingBrands;
-  List<Brand> get stoppedBrands;
   @JsonKey(ignore: true)
   _$NeedSelectionCopyWith<_NeedSelection> get copyWith =>
       throw _privateConstructorUsedError;
@@ -466,9 +438,7 @@ class _$_Selected with DiagnosticableTreeMixin implements _Selected {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initialize,
-    required TResult Function(
-            List<Brand> workingBrands, List<Brand> stoppedBrands)
-        needSelection,
+    required TResult Function(List<Brand> workingBrands) needSelection,
     required TResult Function(Brand currentBrand) selected,
   }) {
     return selected(currentBrand);
@@ -478,8 +448,7 @@ class _$_Selected with DiagnosticableTreeMixin implements _Selected {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initialize,
-    TResult Function(List<Brand> workingBrands, List<Brand> stoppedBrands)?
-        needSelection,
+    TResult Function(List<Brand> workingBrands)? needSelection,
     TResult Function(Brand currentBrand)? selected,
   }) {
     return selected?.call(currentBrand);
@@ -489,8 +458,7 @@ class _$_Selected with DiagnosticableTreeMixin implements _Selected {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialize,
-    TResult Function(List<Brand> workingBrands, List<Brand> stoppedBrands)?
-        needSelection,
+    TResult Function(List<Brand> workingBrands)? needSelection,
     TResult Function(Brand currentBrand)? selected,
     required TResult orElse(),
   }) {

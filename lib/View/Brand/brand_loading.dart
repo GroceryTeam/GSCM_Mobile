@@ -39,7 +39,7 @@ class BrandLoading extends StatelessWidget {
               ),
               const ShimmerBlock(width: double.infinity, height: 64),
               const ShimmerBlock(width: double.infinity, height: 64),
-              const SizedBox(height: 35),
+              /* const SizedBox(height: 35),
               Row(
                 children: [
                   const Text(
@@ -58,7 +58,7 @@ class BrandLoading extends StatelessWidget {
                     ),
                   )
                 ],
-              ),
+              ), */
               const ShimmerBlock(width: double.infinity, height: 64),
               const ShimmerBlock(width: double.infinity, height: 64),
             ],

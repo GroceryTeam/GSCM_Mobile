@@ -1,10 +1,9 @@
 class Product {
   int id, categoryId;
-  String name;
-  int buyPrice, sellPrice, conversionRate, lowerThreshold, status;
-  String unitLabel;
+  String name, categoryName, unitLabel;
+  int sellPrice, conversionRate, lowerThreshold, status;
   int? unpackedProductId;
-  String? unpackedProductName, categoryName;
+  String? unpackedProductName;
 
   Product({
     required this.id,
@@ -13,7 +12,6 @@ class Product {
     this.unpackedProductName,
     required this.categoryId,
     required this.categoryName,
-    required this.buyPrice,
     required this.sellPrice,
     required this.conversionRate,
     required this.lowerThreshold,
@@ -24,12 +22,11 @@ class Product {
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
       id: json['id'] as int,
-      name: json['name'],
+      name: json['name'] as String,
       unpackedProductId: (json['unpackedProductId'] != null) ? json['unpackedProductId'] as int : null,
       unpackedProductName: (json['unpackedProductName'] != null) ? json['unpackedProductName'] : null,
       categoryId: json['categoryId'] as int,
-      categoryName: json['categoryName'],
-      buyPrice: json['buyPrice'] as int,
+      categoryName: json['categoryName'] as String,
       sellPrice: json['sellPrice'] as int,
       conversionRate: json['conversionRate'] as int,
       lowerThreshold: json['lowerThreshold'] as int,

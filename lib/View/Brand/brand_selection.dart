@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gscm_store_owner/Constant/app_theme.dart';
 import 'package:gscm_store_owner/Model/brand.dart';
+import 'package:gscm_store_owner/ViewModel/AppStartUp/app_startup_notifier.dart';
 import 'package:gscm_store_owner/ViewModel/Brand/brand_notifier.dart';
 
 class BrandSelection extends ConsumerStatefulWidget {
@@ -23,7 +24,7 @@ class _BrandSelectionState extends ConsumerState<BrandSelection> {
           padding: const EdgeInsets.fromLTRB(24, 36, 24, 0),
           child: brandState.maybeWhen(
             orElse: () => const SizedBox.shrink(),
-            needSelection: (workingBrands, stoppedBrands) => Column(
+            needSelection: (workingBrands) => Column(
               children: [
                 const Text(
                   'Chọn brand mong muốn',
@@ -43,13 +44,6 @@ class _BrandSelectionState extends ConsumerState<BrandSelection> {
                                 ))
                             .toList(),
                         const SizedBox(height: 35),
-                      ],
-                      if (stoppedBrands.isNotEmpty) ...[
-                        _buildSectionTitle('Ngưng hoạt động', kNeutralColor),
-                        ...stoppedBrands
-                            .map((brand) => _buildBrandTile(
-                                brand: brand, color: kNeutralColor))
-                            .toList(),
                       ],
                     ],
                   ),
@@ -77,7 +71,9 @@ class _BrandSelectionState extends ConsumerState<BrandSelection> {
                             ),
                           ],
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          ref.read(appStartupProvider.notifier).logout();
+                        },
                       ),
                       FloatingActionButton(
                         splashColor: Colors.transparent,

@@ -41,6 +41,12 @@ dependencies:
   reactive_forms: ^11.0.0
   freezed_annotation: ^1.1.0
   shimmer: ^2.0.0
+  firebase_core: ^1.12.0
+  firebase_auth: ^3.3.8
+  google_sign_in: ^5.2.4
+  font_awesome_flutter: ^9.2.0
+  firebase_messaging: ^11.2.8
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:

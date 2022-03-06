@@ -7,7 +7,7 @@ class MyRequest {
 
   MyRequest() {
     BaseOptions options = BaseOptions(
-      baseUrl: 'https://grocerycloudapi.azurewebsites.net/api/v1.0/store-owner/',
+      baseUrl: 'https://grocerycloudstoreownerapi2.azurewebsites.net/api/v1.0/',
       headers: {
         Headers.contentTypeHeader: 'application/json',
       }

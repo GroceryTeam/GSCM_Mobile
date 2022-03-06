@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "845696220721",
+    "project_id": "swd-gsm",
+    "storage_bucket": "swd-gsm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:845696220721:android:8f2ee5df59e79e343bdf10",
+        "android_client_info": {
+          "package_name": "swd.gsm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "845696220721-qodvl2r85qbku6ahpopqm77pr14lo0me.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2Af-5fP4_R_AxCC20v5TXMiZ7HYS_vLs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "845696220721-qodvl2r85qbku6ahpopqm77pr14lo0me.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

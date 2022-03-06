@@ -58,30 +58,32 @@ class OnBoardScreen extends StatelessWidget {
                       ),
                       const Spacer(),
                       MainButton(
-                          bgColor: kPrimaryColor,
-                          height: 60,
-                          width: double.infinity,
-                          text: const Text(
-                            'Đăng nhập',
-                            style: TextStyle(
-                              fontSize: 21,
-                              color: kWhite,
-                            ),
+                        bgColor: kPrimaryColor,
+                        height: 60,
+                        width: double.infinity,
+                        text: const Text(
+                          'Đăng nhập',
+                          style: TextStyle(
+                            fontSize: 21,
+                            color: kWhite,
                           ),
-                          onTap: () => Get.toNamed(AppRoute.login)),
+                        ),
+                        onTap: () => Get.toNamed(AppRoute.login),
+                      ),
                       const SizedBox(height: 12),
                       MainButton(
-                          bgColor: kSecondaryColor,
-                          height: 60,
-                          width: double.infinity,
-                          text: const Text(
-                            'Đăng ký',
-                            style: TextStyle(
-                              fontSize: 21,
-                              color: kBlack,
-                            ),
+                        bgColor: kWhite ,
+                        height: 60,
+                        width: double.infinity,
+                        text: const Text(
+                          'Đăng ký',
+                          style: TextStyle(
+                            fontSize: 21,
+                            color: kBlack,
                           ),
-                          onTap: () => Get.toNamed(AppRoute.register)),
+                        ),
+                        onTap: () => Get.toNamed(AppRoute.register),
+                      ),
                     ],
                   ),
                 ),

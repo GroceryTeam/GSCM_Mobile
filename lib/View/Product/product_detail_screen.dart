@@ -24,7 +24,6 @@ class ProductDetailScreen extends StatelessWidget {
             Text('Danh mục: ${product.categoryName}'),
             Text('Sản phẩm con: ${product.unpackedProductName}'),
             Text('Số lượng quy đổi: ${product.conversionRate}'),
-            Text('Giá mua: ${product.buyPrice}'),
             Text('Giá bán: ${product.sellPrice}'),
             Text('Đơn vị: ${product.unitLabel}'),
             Text('Ngưỡng hết hàng: ${product.lowerThreshold}'),

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,14 +8,24 @@ import 'package:get/route_manager.dart';
 import 'package:gscm_store_owner/Constant/app_route.dart';
 import 'package:gscm_store_owner/Constant/app_theme.dart';
 import 'package:gscm_store_owner/Utils/api_client.dart';
-import 'package:gscm_store_owner/View/Brand/brand_loading.dart';
-import 'package:gscm_store_owner/View/Brand/brand_selection.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:gscm_store_owner/Utils/push_notification_service.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  PushNotification ps = PushNotification.getInstance();
+  await ps.init();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   HttpOverrides.global = MyHttpOverrides();
   // ignore: prefer_const_constructors
   runApp(ProviderScope(child: MyApp()));
+}
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage event) async {
+  await Firebase.initializeApp();
+  debugPrint('Got a message whilst in the background!');
+  debugPrint('Message data: ${event.data}');
 }
 
 class MyApp extends StatelessWidget {
@@ -30,7 +41,7 @@ class MyApp extends StatelessWidget {
       title: 'GSCM_StoreOwner',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
         scaffoldBackgroundColor: kWhite,
       ),
       //home: BrandSelection(),

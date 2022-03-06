@@ -13,9 +13,46 @@ class UserService {
       } else {
         throw WrongUsernamePasswordException();
       }
-    } 
-    catch (e) {
+    } catch (e) {
       throw WrongUsernamePasswordException();
     }
+  }
+
+  Future<dynamic> loginFirebase(String idToken) async {
+    final response = await request.post(
+      'login/firebase',
+      data: {
+        'idToken': idToken,
+      },
+    );
+    return response.data;
+  }
+
+  Future<bool> deleteFCM(String fcmToken, int userId) async {
+    final res = await request.delete(
+      'login/token',
+      data: {
+        'tokenId': fcmToken,
+        'userId': userId,
+      },
+    );
+    if (res.statusCode == 204) {
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> sendFCM(String fcmToken, int userId) async {
+    final res = await request.post(
+      'login/token',
+      data: {
+        'tokenId': fcmToken,
+        'userId': userId,
+      },
+    );
+    if(res.statusCode == 200) {
+      return true;
+    }
+    return false;
   }
 }
