@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:gscm_store_owner/Constant/app_theme.dart';
 
 class MainButton extends StatelessWidget {
   final Color bgColor;
   final Widget text;
   final VoidCallback onTap;
   final double height, width;
+  final bool hasBorder;
 
   const MainButton({
     Key? key,
@@ -13,6 +15,7 @@ class MainButton extends StatelessWidget {
     required this.bgColor,
     required this.text,
     required this.onTap,
+    this.hasBorder = false,
   }) : super(key: key);
 
   @override
@@ -28,6 +31,7 @@ class MainButton extends StatelessWidget {
           splashFactory: NoSplash.splashFactory,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
+            side: (hasBorder) ? BorderSide(color: kNeutralColor) : BorderSide.none
           ),
         ),
       ),

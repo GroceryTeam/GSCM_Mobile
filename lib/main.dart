@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/route_manager.dart';
 import 'package:gscm_store_owner/Constant/app_route.dart';
 import 'package:gscm_store_owner/Constant/app_theme.dart';
+import 'package:gscm_store_owner/Constant/lib_color_schemes.g.dart';
 import 'package:gscm_store_owner/Utils/api_client.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gscm_store_owner/Utils/push_notification_service.dart';
@@ -41,8 +42,7 @@ class MyApp extends StatelessWidget {
       title: 'GSCM_StoreOwner',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.green,
-        scaffoldBackgroundColor: kWhite,
+        colorScheme: lightColorScheme,
       ),
       //home: BrandSelection(),
       initialRoute: AppRoute.appStartup,

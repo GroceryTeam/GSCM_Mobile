@@ -4,6 +4,7 @@ import 'package:gscm_store_owner/Accessories/shimmer_block.dart';
 import 'package:gscm_store_owner/Constant/app_theme.dart';
 import 'package:gscm_store_owner/Model/event.dart';
 import 'package:gscm_store_owner/ViewModel/Event/event_notifier.dart';
+import 'package:gscm_store_owner/ViewModel/Event/event_state.dart';
 
 class EventListScreen extends ConsumerWidget {
   const EventListScreen({Key? key}) : super(key: key);
@@ -15,84 +16,124 @@ class EventListScreen extends ConsumerWidget {
         title: const Text('Sự kiện'),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text('Sự kiện đang diễn ra:'),
-              Consumer(
-                builder: (context, ref, child) {
-                  final eventState = ref.watch(eventNotifierProvider);
-                  return eventState.when(
-                    loading: () => const ShimmerBlock(
-                        width: double.infinity, height: 60),
-                    data: (currentEvent, eventList) {
-                      return _buildActiveEvent(currentEvent);
-                    },
-                  );
-                },
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text('Danh sách sự kiện'),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.add_circle_outline_rounded),
-                  )
-                ],
-              ),
-              Expanded(
-                child: Consumer(
-                  builder: (context, ref, child) {
-                    final eventState = ref.watch(eventNotifierProvider);
-                    return eventState.maybeWhen(
-                      orElse: () => const SizedBox.shrink(),
-                      data: (currentEvent, eventList) => ListView.separated(
-                        itemCount: eventList.length,
-                        separatorBuilder: (context, index) => const Divider(
-                        height: 0,
-                        thickness: 1.125,
-                      ),
-                        itemBuilder: (context, index) => ListTile(
-                          title: Text(eventList[index].name),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildActiveEvent(),
+                const SizedBox(height: 12),
+                _buildEventList(),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildActiveEvent(Event? event) {
-    bool isActive = event != null;
+  Widget _buildActiveEvent() {
     return Container(
-      width: double.infinity,
-      height: 70,
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: isActive ? kPrimaryColor : kNeutralColor,
-            width: 3,
-          )),
-      child: Center(
-        child: Text(
-          isActive ? event.name : 'Chưa có sự kiện nào đang diễn ra',
-          maxLines: 2,
-          style: TextStyle(
-            color: isActive ? kPrimaryColor : kNeutralColor,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            overflow: TextOverflow.ellipsis,
+        borderRadius: BorderRadius.circular(12),
+        color: kNeutralColor100,
+        boxShadow: [
+          BoxShadow(
+            color: kNeutralColor.withOpacity(0.2),
+            offset: const Offset(0, 7),
+            blurRadius: 12,
+            spreadRadius: 4,
           ),
-        ),
+        ],
+      ),
+      padding: const EdgeInsets.all(12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Đang diễn ra',
+            style: kListTilePrimaryText.copyWith(fontSize: 16),
+          ),
+          const SizedBox(height: 10),
+          Consumer(
+            builder: (context, ref, child) {
+              final eventState = ref.watch(eventNotifierProvider);
+              return eventState.when(
+                loading: () => const SizedBox.shrink(),
+                data: (currentEvent, eventList) {
+                  return Text(
+                    currentEvent?.name ?? 'Chưa có sự kiện nào đang diễn ra',
+                    maxLines: 2,
+                    style: TextStyle(
+                      color: (currentEvent != null)
+                          ? kPrimaryColor
+                          : kNeutralColor,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEventList() {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: kNeutralColor100,
+        boxShadow: [
+          BoxShadow(
+            color: kNeutralColor.withOpacity(0.2),
+            offset: const Offset(0, 7),
+            blurRadius: 12,
+            spreadRadius: 4,
+          ),
+        ],
+      ),
+      padding: const EdgeInsets.all(12),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Danh sách sự kiện',
+                style: kListTilePrimaryText.copyWith(fontSize: 16),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.add_circle_outline_rounded),
+                splashColor: Colors.transparent,
+              )
+            ],
+          ),
+          Consumer(
+            builder: (context, ref, child) {
+              final eventState = ref.watch(eventNotifierProvider);
+              return eventState.maybeWhen(
+                orElse: () => const SizedBox.shrink(),
+                data: (currentEvent, eventList) => ListView.separated(
+                  shrinkWrap: true,
+                  itemCount: eventList.length,
+                  separatorBuilder: (context, index) => const Divider(
+                    height: 0,
+                    thickness: 1.125,
+                  ),
+                  itemBuilder: (context, index) => ListTile(
+                    title: Text(eventList[index].name),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

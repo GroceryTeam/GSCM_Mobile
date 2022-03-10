@@ -34,7 +34,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.grey[200],
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(left: 32, right: 32, bottom: 20),
@@ -79,17 +78,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               MainButton(
                 height: 50,
                 width: double.infinity,
-                bgColor: kSecondaryColor,
+                bgColor: kNeutralColor100,
+                hasBorder: true,
                 text: Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Text(
+                  children: [
+                    const Text(
                       'Đăng nhập bằng Google',
                       style: TextStyle(fontSize: 19, color: kBlack),
                     ),
-                    SizedBox(width: 8),
-                    FaIcon(FontAwesomeIcons.google, color: kDangerColor200),
+                    const SizedBox(width: 8),
+                    FaIcon(FontAwesomeIcons.google, color: kDangerColor),
                   ],
                 ),
                 onTap: () async {

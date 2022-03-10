@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-const kPrimaryColor = Color(0xFF91C788);
-const kPrimaryColor200 = Color(0xFF95C9B4);
-const kPrimaryColor100 = Color(0xFFDDFFBC);
-const kSecondaryColor = Color(0xFFFEFFDE);
-const kNeutralColor = Color(0xFF6D7175);
-const kNeutralColor200 = Color(0xFFF0F0F0);
-const kDangerColor = Color(0xFFD72C0D);
-const kDangerColor200 = Color(0xFFFD938D);
-const kDangerColor100 = Color(0xFFFED3D1);
+final kPrimaryColor = Get.theme.colorScheme.primary;
+final kSecondaryColor = Get.theme.colorScheme.secondary;
+final kNeutralColor = Get.theme.colorScheme.onSurfaceVariant;
+final kNeutralColor200 = Get.theme.colorScheme.surfaceVariant;
+final kNeutralColor100 = Get.theme.colorScheme.surface;
+final kDangerColor = Get.theme.colorScheme.error;
+final kTertiaryColor = Get.theme.colorScheme.tertiary;
 const kBlack = Colors.black;
 const kWhite = Colors.white;
-const kOrange = Color(0xFFFFA700);
+final kGrey = Colors.grey[700];
 
 const kInputTitleTextStyle = TextStyle(
   fontSize: 17,
@@ -19,7 +18,7 @@ const kInputTitleTextStyle = TextStyle(
   color: kBlack,
 );
 
-const kListTileMoneyText = TextStyle(
+final kListTileMoneyText = TextStyle(
   fontWeight: FontWeight.w600,
   color: kPrimaryColor,
   textBaseline: TextBaseline.alphabetic,
@@ -30,13 +29,13 @@ const kListTilePrimaryText = TextStyle(
   textBaseline: TextBaseline.alphabetic,
 );
 
-const kListTileSecondaryText = TextStyle(
+final kListTileSecondaryText = TextStyle(
   fontSize: 14,
   color: kNeutralColor,
   textBaseline: TextBaseline.alphabetic,
 );
 
-const kTextInputDecoration = InputDecoration(
+final kTextInputDecoration = InputDecoration(
   enabledBorder: kInputBorder,
   focusedBorder: kInputBorder,
   errorBorder: kInputBorder,

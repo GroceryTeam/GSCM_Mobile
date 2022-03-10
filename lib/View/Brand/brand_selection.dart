@@ -27,7 +27,7 @@ class _BrandSelectionState extends ConsumerState<BrandSelection> {
             needSelection: (workingBrands) => Column(
               children: [
                 const Text(
-                  'Chọn brand mong muốn',
+                  'Thương hiệu của bạn',
                   style: TextStyle(fontSize: 36, fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 40),
@@ -35,11 +35,11 @@ class _BrandSelectionState extends ConsumerState<BrandSelection> {
                   child: ListView(
                     children: [
                       if (workingBrands.isNotEmpty) ...[
-                        _buildSectionTitle('Đang hoạt động', kPrimaryColor),
+                        _buildSectionTitle('Đang hoạt động', kTertiaryColor),
                         ...workingBrands
                             .map((brand) => _buildBrandTile(
                                   brand: brand,
-                                  color: kPrimaryColor,
+                                  color: kTertiaryColor,
                                   isSelected: brand.id == selectedBrandId,
                                 ))
                             .toList(),
@@ -58,7 +58,7 @@ class _BrandSelectionState extends ConsumerState<BrandSelection> {
                             splashFactory: NoSplash.splashFactory),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
-                          children: const [
+                          children: [
                             Text(
                               'Thêm brand ',
                               style:

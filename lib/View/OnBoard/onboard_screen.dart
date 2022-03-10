@@ -27,9 +27,9 @@ class OnBoardScreen extends StatelessWidget {
               flex: 3,
               child: Container(
                 width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: kNeutralColor200,
-                  borderRadius: BorderRadius.only(
+                decoration: BoxDecoration(
+                  color: Get.theme.scaffoldBackgroundColor,
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(20),
                     topRight: Radius.circular(20),
                   ),
@@ -49,7 +49,7 @@ class OnBoardScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 24),
-                      const Text(
+                      Text(
                         'Grocery is happy to see you!',
                         style: TextStyle(
                           color: kNeutralColor,
@@ -75,6 +75,7 @@ class OnBoardScreen extends StatelessWidget {
                         bgColor: kWhite ,
                         height: 60,
                         width: double.infinity,
+                        hasBorder: true,
                         text: const Text(
                           'Đăng ký',
                           style: TextStyle(

@@ -5,7 +5,6 @@ import 'package:gscm_store_owner/Constant/app_theme.dart';
 import 'package:gscm_store_owner/Model/store.dart';
 import 'package:gscm_store_owner/View/Invoice/bill_tab.dart';
 import 'package:gscm_store_owner/View/Invoice/receipt_tab.dart';
-import 'package:gscm_store_owner/ViewModel/Brand/brand_notifier.dart';
 import 'package:gscm_store_owner/ViewModel/Invoice/invoice_notifier.dart';
 
 class InvoicePage extends StatelessWidget {
@@ -28,7 +27,7 @@ class InvoicePage extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text('Từ ngày - Đến ngày'),
+                    const Text('Thời gian'),
                     const SizedBox(width: 10),
                     Consumer(
                       builder: (context, ref, child) {
@@ -49,21 +48,29 @@ class InvoicePage extends StatelessWidget {
                             }
                           },
                           child: Container(
-                            height: 30,
+                            height: 40,
                             decoration: BoxDecoration(
-                                color: Colors.grey[200],
+                                //color: Colors.grey[100],
+                                border: Border.all(),
                                 borderRadius: BorderRadius.circular(6)),
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: Center(
-                              child: Text(
-                                invoiceState.when(
-                                  loading: () => 'dd/mm/yyyy - dd/mm/yyyy',
-                                  data: (bills, receipts, startDate, endDate,
-                                          stores, chosenStore) =>
-                                      '${startDate.day}/${startDate.month}/${startDate.year} - ${endDate.day}/${endDate.month}/${endDate.year}',
-                                  noData: (startDate, endDate) =>
-                                      '${startDate.day}/${startDate.month}/${startDate.year} - ${endDate.day}/${endDate.month}/${endDate.year}',
-                                ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    invoiceState.when(
+                                      loading: () => 'dd/mm/yyyy - dd/mm/yyyy',
+                                      data: (bills, receipts, startDate, endDate,
+                                              stores, chosenStore) =>
+                                          '${startDate.day}/${startDate.month}/${startDate.year} - ${endDate.day}/${endDate.month}/${endDate.year}',
+                                      noData: (startDate, endDate) =>
+                                          '${startDate.day}/${startDate.month}/${startDate.year} - ${endDate.day}/${endDate.month}/${endDate.year}',
+                                    ),
+                                  ),
+                                  const SizedBox(width: 6),
+                                  const Icon(Icons.date_range_rounded),
+                                ],
                               ),
                             ),
                           ),
@@ -93,6 +100,7 @@ class InvoicePage extends StatelessWidget {
                           data: (bills, receipts, startDate, endDate, stores,
                               chosenStore) {
                             return DropdownButton(
+                              
                               value: chosenStore,
                               items: stores
                                   .map(
@@ -103,7 +111,9 @@ class InvoicePage extends StatelessWidget {
                                   )
                                   .toList(),
                               onChanged: (Store? value) {
-                                ref.read(invoiceProvider.notifier).setChosenStore(value!);
+                                ref
+                                    .read(invoiceProvider.notifier)
+                                    .setChosenStore(value!);
                               },
                             );
                           },
@@ -114,9 +124,20 @@ class InvoicePage extends StatelessWidget {
                 ),
               ),
               Container(
-                color: kPrimaryColor,
-                child: const TabBar(
-                  tabs: [
+                height: 60,
+                decoration: BoxDecoration(
+                  color: kNeutralColor200,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                margin: const EdgeInsets.symmetric(horizontal: 8),
+                child: TabBar(
+                  indicator: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: kPrimaryColor,
+                  ),
+                  unselectedLabelColor: kPrimaryColor,
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                  tabs: const [
                     Tab(
                       child: Text('Bill'),
                     ),
@@ -126,6 +147,7 @@ class InvoicePage extends StatelessWidget {
                   ],
                 ),
               ),
+              const SizedBox(height: 10),
               const Expanded(
                 child: TabBarView(
                   children: [

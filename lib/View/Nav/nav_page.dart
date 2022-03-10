@@ -33,7 +33,7 @@ class _NavPageState extends State<NavPage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentPage,
-        showUnselectedLabels: true,
+        showUnselectedLabels: false,
         showSelectedLabels: true,
         elevation: 5,
         unselectedItemColor: kNeutralColor,

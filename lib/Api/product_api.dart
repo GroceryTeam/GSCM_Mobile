@@ -9,45 +9,21 @@ class ProductService {
       String? searchTerm,
       int? categoryId,
       index = Metadata.pageIndex,
-      size = Metadata.pageSize}) async {
+      size = Metadata.pageSize,
+      int? status,
+      String? sku}) async {
     final response = await request.get(
       'products',
       queryParameters: {
         'brand-id': brandId,
         'search-term': searchTerm,
         'category-id': categoryId,
+        'status': status,
+        'sku': sku,
         'page-index': index,
         'page-size': size,
       },
     );
     return response.data;
   }
-
-  /* Future<dynamic> searchProduct(int brandId, String keyword,
-      {index = Metadata.pageIndex, size = Metadata.pageSize}) async {
-    final res = await request.get(
-      'products',
-      queryParameters: {
-        'brand-id': brandId,
-        'search-term': keyword,
-        'page-index': index,
-        'page-size': size,
-      },
-    );
-    return res.data;
-  }
-
-  Future<dynamic> fetchProductByCategoryId(int brandId, int categoryId,
-      {index = Metadata.pageIndex, size = Metadata.pageSize}) async {
-    final res = await request.get(
-      'products',
-      queryParameters: {
-        'page-index': index,
-        'page-size': size,
-        'brand-id': brandId,
-        'category-id': categoryId,
-      },
-    );
-    return res.data;
-  } */
 }
