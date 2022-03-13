@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 import 'package:gscm_store_owner/Accessories/product_tile.dart';
 import 'package:gscm_store_owner/Accessories/shimmer_block.dart';
+import 'package:gscm_store_owner/Constant/app_route.dart';
 import 'package:gscm_store_owner/Constant/app_theme.dart';
 import 'package:gscm_store_owner/Model/category.dart';
 import 'package:gscm_store_owner/ViewModel/Category/category_notifier.dart';
@@ -43,30 +45,14 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: [
-            Expanded(
-              child: TextField(
-                controller: _textController,
-                decoration: const InputDecoration(
-                  border: UnderlineInputBorder(),
-                  fillColor: kWhite,
-                  filled: true,
-                ),
-              ),
-            ),
-            IconButton(
-              icon: const Icon(Icons.search),
-              onPressed: () {
-                if (_textController.text.isNotEmpty) {
-                  ref
-                      .read(productNotifierProvider.notifier)
-                      .searchProduct(_textController.text);
-                }
-              },
-            )
-          ],
-        ),
+        title: const Text('Sản phẩm'),
+        actions: [
+          IconButton(
+            onPressed: () => Get.toNamed(AppRoute.productSearch),
+            icon: const Icon(Icons.search),
+            splashColor: Colors.transparent,
+          ),
+        ],
       ),
       body: Column(
         children: [

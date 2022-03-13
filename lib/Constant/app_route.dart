@@ -7,6 +7,7 @@ import 'package:gscm_store_owner/View/Login/login_screen.dart';
 import 'package:gscm_store_owner/View/NotFound/not_found_screen.dart';
 import 'package:gscm_store_owner/View/OnBoard/onboard_screen.dart';
 import 'package:gscm_store_owner/View/Product/product_list_screen.dart';
+import 'package:gscm_store_owner/View/Product/product_search_screen.dart';
 import 'package:gscm_store_owner/View/Register/register_screen.dart';
 
 class AppRoute {
@@ -20,16 +21,18 @@ class AppRoute {
   static const String brandSelect = '/brandSelect';
   static const String productList = '/productList';
   static const String categories = '/categories';
+  static const String productSearch = '/productSearch';
 
   static GetPage notFoundScreen = GetPage(name: notFound, page: () => const NotFoundScreen());
 
   static List<GetPage> getPages = [
-    GetPage(name: appStartup, page: () => AppStartupPage()),
-    GetPage(name: login, page: () => LoginScreen()),
-    GetPage(name: register, page: () => RegisterScreen()),
+    GetPage(name: appStartup, page: () => const AppStartupPage()),
+    GetPage(name: login, page: () => const LoginScreen()),
+    GetPage(name: register, page: () => const RegisterScreen()),
     GetPage(name: onBoard, page: () => const OnBoardScreen()),
-    GetPage(name: brandSelect, page: () => BrandPage()),
-    GetPage(name: productList, page: () => ProductListScreen()),
-    GetPage(name: categories, page: () => CategoryScreen(),)
+    GetPage(name: brandSelect, page: () => const BrandPage()),
+    GetPage(name: productList, page: () => const ProductListScreen()),
+    GetPage(name: categories, page: () => const CategoryScreen(),),
+    GetPage(name: productSearch, page: () => const ProductSearchScreen())
   ];
 }

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:gscm_store_owner/Constant/app_route.dart';
 import 'package:gscm_store_owner/Constant/app_theme.dart';
 import 'package:gscm_store_owner/ViewModel/AppStartUp/app_startup_notifier.dart';
+import 'package:gscm_store_owner/ViewModel/Brand/brand_notifier.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -38,7 +39,7 @@ class ProfileScreen extends ConsumerWidget {
                   'Chọn thương hiệu',
                   style: TextStyle(color: kGrey),
                 ),
-                onTap: () {},
+                onTap: () => ref.read(brandNotifierProvider.notifier).selectBrand(),
               ),
               _section(
                 icon: Icon(
@@ -71,7 +72,7 @@ class ProfileScreen extends ConsumerWidget {
                   'Danh mục',
                   style: TextStyle(color: kGrey),
                 ),
-                onTap: () {},
+                onTap: () => Get.toNamed(AppRoute.categories),
               ),
               _section(
                 icon: Icon(
@@ -82,7 +83,7 @@ class ProfileScreen extends ConsumerWidget {
                   'Đăng xuất',
                   style: TextStyle(color: kDangerColor),
                 ),
-                onTap: () {},
+                onTap: () => ref.read(appStartupProvider.notifier).logout(),
               ),
             ],
           ),
