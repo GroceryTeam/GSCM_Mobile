@@ -1,6 +1,6 @@
 class Product {
   int id, categoryId;
-  String name, categoryName, unitLabel;
+  String name, categoryName, unitLabel, sku;
   int sellPrice, conversionRate, lowerThreshold, status;
   int? unpackedProductId;
   String? unpackedProductName;
@@ -8,6 +8,7 @@ class Product {
   Product({
     required this.id,
     required this.name,
+    required this.sku,
     this.unpackedProductId,
     this.unpackedProductName,
     required this.categoryId,
@@ -23,6 +24,7 @@ class Product {
     return Product(
       id: json['id'] as int,
       name: json['name'] as String,
+      sku: json['sku'],
       unpackedProductId: (json['unpackedProductId'] != null) ? json['unpackedProductId'] as int : null,
       unpackedProductName: (json['unpackedProductName'] != null) ? json['unpackedProductName'] : null,
       categoryId: json['categoryId'] as int,

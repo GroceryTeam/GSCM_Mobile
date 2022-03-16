@@ -6,6 +6,7 @@ import 'package:gscm_store_owner/Accessories/shimmer_block.dart';
 import 'package:gscm_store_owner/Constant/app_route.dart';
 import 'package:gscm_store_owner/Constant/app_theme.dart';
 import 'package:gscm_store_owner/Model/category.dart';
+import 'package:gscm_store_owner/View/Product/product_detail_screen.dart';
 import 'package:gscm_store_owner/ViewModel/Category/category_notifier.dart';
 import 'package:gscm_store_owner/ViewModel/Product/product_notifier.dart';
 
@@ -50,7 +51,12 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
           IconButton(
             onPressed: () => Get.toNamed(AppRoute.productSearch),
             icon: const Icon(Icons.search),
-            splashColor: Colors.transparent,
+            splashRadius: 1,
+          ),
+          IconButton(
+            onPressed: () => Get.to(() => const ProductDetailScreen(product: null)),
+            icon: const Icon(Icons.add),
+            splashRadius: 1,
           ),
         ],
       ),

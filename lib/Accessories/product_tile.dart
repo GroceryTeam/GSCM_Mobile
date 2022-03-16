@@ -83,9 +83,7 @@ class ProductTile extends StatelessWidget {
           ),
         ],
       ),
-      onTap: () {
-        Get.to(() => ProductDetailScreen(product: product));
-      },
+      onTap: () => Get.to(() => ProductDetailScreen(product: product)),
     );
   }
 }

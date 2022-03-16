@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gscm_store_owner/Accessories/shimmer_block.dart';
 import 'package:gscm_store_owner/Constant/app_theme.dart';
-import 'package:gscm_store_owner/Model/event.dart';
 import 'package:gscm_store_owner/ViewModel/Event/event_notifier.dart';
-import 'package:gscm_store_owner/ViewModel/Event/event_state.dart';
 
 class EventListScreen extends ConsumerWidget {
   const EventListScreen({Key? key}) : super(key: key);
@@ -23,7 +20,7 @@ class EventListScreen extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildActiveEvent(),
-                const SizedBox(height: 12),
+                const SizedBox(height: 20),
                 _buildEventList(),
               ],
             ),
@@ -35,6 +32,7 @@ class EventListScreen extends ConsumerWidget {
 
   Widget _buildActiveEvent() {
     return Container(
+      width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(12),
         color: kNeutralColor100,

@@ -6,6 +6,7 @@ import 'package:gscm_store_owner/Constant/metadata.dart';
 import 'package:gscm_store_owner/Model/revenue.dart';
 import 'package:gscm_store_owner/Model/product.dart';
 import 'package:gscm_store_owner/ViewModel/Brand/brand_notifier.dart';
+import 'package:gscm_store_owner/ViewModel/base_changenotifier.dart';
 
 final statisticsProvider = ChangeNotifierProvider((ref) {
   final brandState = ref.watch(brandNotifierProvider);
@@ -15,7 +16,7 @@ final statisticsProvider = ChangeNotifierProvider((ref) {
   );
 });
 
-class StatisticsNotifier extends ChangeNotifier {
+class StatisticsNotifier extends BaseChangeNotifier {
   int? brandId;
   List<Product> noosProducts = [];
   List<DailyRevenue> dailyRevenue = [];
@@ -25,10 +26,10 @@ class StatisticsNotifier extends ChangeNotifier {
   int pageIndexProduct = Metadata.pageIndex;
   int pageSizeProduct = Metadata.pageSize;
   DateTime endDate = DateTime.now();
-  DateTime startDate = DateTime.now().subtract(const Duration(days: 7));
+  DateTime startDate = DateTime.now().subtract(const Duration(days: 30));
   DateTime startMonth = DateTime.now().subtract(const Duration(days: 365));
 
-  StatisticsNotifier(this.brandId) {
+  StatisticsNotifier(this.brandId) : super(ViewStatus.complete) {
     if (brandId != null) {
       init();
     }

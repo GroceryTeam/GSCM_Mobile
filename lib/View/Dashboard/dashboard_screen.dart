@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
 import 'package:gscm_store_owner/Accessories/product_tile.dart';
 import 'package:gscm_store_owner/Constant/app_theme.dart';
+import 'package:gscm_store_owner/View/Dashboard/out_of_stock_screen.dart';
 import 'package:gscm_store_owner/ViewModel/Statistics/statistics_notifier.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -84,7 +86,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   statisticsProvider.select((value) => value.dailyRevenue));
               chartData = dailyRevenue
                   .map((e) => ChartData(
-                      x: '${e.date.day} Thg${e.date.month}', y: e.revenue))
+                      x: '${e.date.day}/${e.date.month}', y: e.revenue))
                   .toList();
             } else {
               final monthlyRevenue = ref.watch(
@@ -118,7 +120,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                           : [kDangerColor, kDangerColor.withOpacity(0.1)],
                     ),
                     borderDrawMode: BorderDrawMode.top,
-                    borderColor: kPrimaryColor,
+                    borderColor: (isDailyGraph) ? kPrimaryColor : kDangerColor,
                     borderWidth: 2,
                     opacity: 0.7,
                     name: (isDailyGraph) ? 'Daily Revenue' : 'Monthly Revenue',
@@ -141,14 +143,14 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           child: Text(
             (isDailyBtn) ? 'Ngày' : 'Tháng',
             style: TextStyle(
-              color: (isDailyGraph ^ isDailyBtn) ? kWhite : kPrimaryColor,
+              color: (isDailyGraph ^ isDailyBtn) ? kPrimaryColor : kWhite,
             ),
           ),
         ),
         style: TextButton.styleFrom(
             backgroundColor: (isDailyGraph ^ isDailyBtn)
-                ? kPrimaryColor
-                : Colors.transparent,
+                ? Colors.transparent
+                : kPrimaryColor,
             splashFactory: NoSplash.splashFactory,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
@@ -187,9 +189,16 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Text(
-                      'Xem thêm',
-                      style: kListTileSecondaryText.copyWith(color: kPrimaryColor, fontSize: 13),
+                    TextButton(
+                      onPressed: () => Get.to(() => const OutOfStockScreen()),
+                      child: Text(
+                        'Xem thêm',
+                        style: kListTileSecondaryText.copyWith(
+                            color: kPrimaryColor, fontSize: 13),
+                      ),
+                      style: TextButton.styleFrom(
+                        splashFactory: NoSplash.splashFactory,
+                      ),
                     ),
                     Icon(Icons.chevron_right_rounded, color: kPrimaryColor),
                   ],

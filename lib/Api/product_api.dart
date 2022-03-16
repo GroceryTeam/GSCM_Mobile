@@ -26,4 +26,33 @@ class ProductService {
     );
     return response.data;
   }
+
+  Future<bool> updateProduct(
+      int productId, int brandId, Map<String, dynamic> data) async {
+    final res = await request.put(
+      'products/$productId',
+      queryParameters: {
+        'brand-id': brandId,
+      },
+      data: data,
+    );
+    if(res.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> createProduct(int brandId, Map<String, dynamic> data) async {
+    final res = await request.post(
+      'products',
+      queryParameters: {
+        'brand-id': brandId,
+      },
+      data: data,
+    );
+    if(res.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
 }

@@ -12,11 +12,19 @@ class CategoryScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(title: const Text('Category')),
-        floatingActionButton: FloatingActionButton(
+        appBar: AppBar(
+          title: const Text('Category'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () => inputCategory(ref, isEdit: false),
+            )
+          ],
+        ),
+        /* floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),
           onPressed: () => inputCategory(ref, isEdit: false),
-        ),
+        ), */
         body: Consumer(
           builder: (context, ref, child) {
             final categoryState = ref.watch(categoryProvider);
@@ -35,7 +43,8 @@ class CategoryScreen extends ConsumerWidget {
                   itemBuilder: (context, index) => ListTile(
                     title: Text(data[index].name),
                     trailing: IconButton(
-                      onPressed: () => inputCategory(ref, category: data[index]),
+                      onPressed: () =>
+                          inputCategory(ref, category: data[index]),
                       icon: const Icon(Icons.edit),
                     ),
                   ),
@@ -82,7 +91,7 @@ class CategoryScreen extends ConsumerWidget {
                               .read(categoryProvider.notifier)
                               .createCategory(controller.text);
                         }
-                        if(result) {
+                        if (result) {
                           Get.back();
                         }
                       },

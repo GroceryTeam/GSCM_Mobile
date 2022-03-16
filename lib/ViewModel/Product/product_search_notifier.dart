@@ -21,7 +21,7 @@ class ProductSearchNotifier extends BaseChangeNotifier {
   int pageSize = Metadata.pageSize;
   int pageIndex = Metadata.pageIndex;
 
-  ProductSearchNotifier(this.brandId);
+  ProductSearchNotifier(this.brandId): super(ViewStatus.complete);
 
   void searchProduct(String keyword) async {
     setStatus(ViewStatus.loading);
@@ -32,6 +32,8 @@ class ProductSearchNotifier extends BaseChangeNotifier {
       index: pageIndex,
       size: pageSize,
     );
+    pageIndex = res['pageIndex'] as int;
+    pageSize = res['totalPage'] as int;
     searchProducts = (res['data'] as List).map((product) => Product.fromJson(product)).toList();
     setStatus(ViewStatus.complete);
   }

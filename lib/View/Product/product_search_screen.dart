@@ -60,9 +60,8 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
                   height: 0,
                   thickness: 1.125,
                 ),
-                itemBuilder: (context, index) => ProductTile(
-                  product: model.searchProducts[index],
-                ),
+                itemBuilder: (context, index) =>
+                    ProductTile(product: model.searchProducts[index]),
               );
             default:
               return const Center(
