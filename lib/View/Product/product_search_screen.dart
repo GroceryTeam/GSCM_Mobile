@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:get/get.dart';
+import 'package:gscm_store_owner/Accessories/loading_widget.dart';
 import 'package:gscm_store_owner/Accessories/product_tile.dart';
 import 'package:gscm_store_owner/Constant/app_theme.dart';
+import 'package:gscm_store_owner/Model/product.dart';
+import 'package:gscm_store_owner/View/Product/product_detail_screen.dart';
 import 'package:gscm_store_owner/ViewModel/Product/product_search_notifier.dart';
 import 'package:gscm_store_owner/ViewModel/base_changenotifier.dart';
 
@@ -41,15 +45,35 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
           onSubmitted: (value) =>
               ref.read(productSearchNotifier).searchProduct(value),
         ),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              String skuQr = await FlutterBarcodeScanner.scanBarcode(
+                '#FF0000',
+                'Hủy',
+                true,
+                ScanMode.QR,
+              );
+              _textController.text = skuQr;
+              ref.read(productSearchNotifier).searchProduct(skuQr);
+              /* Product product =
+                  await ref.read(productSearchNotifier).searchProdutSku(skuQr);
+              Get.to(() => ProductDetailScreen(product: product)); */
+            },
+            icon: const Icon(
+              Icons.qr_code_scanner_rounded,
+              color: kBlack,
+            ),
+            splashRadius: 1,
+          ),
+        ],
       ),
       body: Consumer(
         builder: (context, ref, child) {
           final model = ref.watch(productSearchNotifier);
           switch (model.status) {
             case ViewStatus.loading:
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const LoadingWidget();
             case ViewStatus.complete:
               if (model.searchProducts.isEmpty) {
                 return const SizedBox.shrink();

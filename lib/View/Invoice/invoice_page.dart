@@ -139,10 +139,10 @@ class InvoicePage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
                   tabs: const [
                     Tab(
-                      child: Text('Bill'),
+                      child: Text('Bán'),
                     ),
                     Tab(
-                      child: Text('Receipt'),
+                      child: Text('Nhập'),
                     )
                   ],
                 ),

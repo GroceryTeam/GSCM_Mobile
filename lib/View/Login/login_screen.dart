@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gscm_store_owner/Accessories/dialog.dart';
+import 'package:gscm_store_owner/Constant/app_route.dart';
 
 import 'package:gscm_store_owner/Utils/api_client.dart';
 import 'package:gscm_store_owner/ViewModel/AppStartUp/app_startup_notifier.dart';
@@ -59,17 +62,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     String username = loginForm.control('username').value;
                     String password = loginForm.control('password').value;
                     try {
+                      showLoadingDialog();
                       bool result = await ref
                           .read(appStartupProvider.notifier)
                           .login(username, password);
+                      hideDialog();
                       if (result) {
                         Get.back();
                       } else {
                         throw WrongUsernamePasswordException();
                       }
                     } on WrongUsernamePasswordException {
-                      Get.snackbar(
-                          '', 'Tên đăng nhập hoặc mật khẩu không đúng');
+                      Fluttertoast.showToast(msg: 'Tên đăng nhập hoặc mật khẩu không đúng');
                     }
                   }
                 },
@@ -112,12 +116,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         fontSize: 17,
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.offAndToNamed(AppRoute.register);
+                    },
                     style: TextButton.styleFrom(
                         splashFactory: NoSplash.splashFactory),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),
@@ -140,7 +146,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           ReactiveTextField(
             formControlName: 'username',
             validationMessages: (control) => {
-              ValidationMessage.required: 'The username must not be empty',
+              ValidationMessage.required: 'Bạn chưa điền tên đăng nhập',
             },
             decoration: kTextInputDecoration,
           ),
@@ -154,7 +160,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             formControlName: 'password',
             obscureText: true,
             validationMessages: (control) => {
-              ValidationMessage.required: 'The password must not be empty',
+              ValidationMessage.required: 'Bạn chưa nhập mật khẩu',
             },
             decoration: kTextInputDecoration,
           ),

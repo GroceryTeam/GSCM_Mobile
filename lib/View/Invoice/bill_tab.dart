@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
+import 'package:gscm_store_owner/Accessories/loading_widget.dart';
 import 'package:gscm_store_owner/Constant/app_theme.dart';
+import 'package:gscm_store_owner/View/Invoice/bill_detail_screen.dart';
 import 'package:gscm_store_owner/ViewModel/Invoice/invoice_notifier.dart';
 import 'package:intl/intl.dart';
 
@@ -37,9 +40,7 @@ class _BillTabState extends ConsumerState<BillTab> {
       body: Consumer(builder: (context, ref, child) {
         final invoiceState = ref.watch(invoiceProvider);
         return invoiceState.when(
-          loading: () => const Center(
-            child: CircularProgressIndicator(),
-          ),
+          loading: () => const LoadingWidget(),
           noData: (startDate, endDate) =>
               const Center(child: Text('Không có dữ liệu')),
           data: (bills, receipts, startDate, endDate, stores, chosenStore) {
@@ -64,8 +65,10 @@ class _BillTabState extends ConsumerState<BillTab> {
                 return SizedBox(
                   height: 88,
                   child: ListTile(
-                    contentPadding:
-                        const EdgeInsets.fromLTRB(12, 8, 12, 16),
+                    contentPadding: const EdgeInsets.fromLTRB(12, 8, 12, 16),
+                    onTap: () {
+                      Get.to(() => BillDetailScreen(bill: bills[index]));
+                    },
                     title: Row(
                       children: [
                         Expanded(

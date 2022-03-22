@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:get/get.dart';
+import 'package:gscm_store_owner/Accessories/dialog.dart';
 import 'package:gscm_store_owner/Constant/app_theme.dart';
+import 'package:gscm_store_owner/View/Event/even_detail_screen.dart';
 import 'package:gscm_store_owner/ViewModel/Event/event_notifier.dart';
 
 class EventListScreen extends ConsumerWidget {
@@ -106,11 +109,22 @@ class EventListScreen extends ConsumerWidget {
                 style: kListTilePrimaryText.copyWith(fontSize: 16),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(
+                    () => EventDetailScreen(
+                      currentEvent: null,
+                      isCreating: true,
+                    ),
+                  );
+                },
                 icon: const Icon(Icons.add_circle_outline_rounded),
                 splashColor: Colors.transparent,
               )
             ],
+          ),
+          const Divider(
+            height: 0,
+            thickness: 1.125,
           ),
           Consumer(
             builder: (context, ref, child) {
@@ -118,6 +132,7 @@ class EventListScreen extends ConsumerWidget {
               return eventState.maybeWhen(
                 orElse: () => const SizedBox.shrink(),
                 data: (currentEvent, eventList) => ListView.separated(
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: eventList.length,
                   separatorBuilder: (context, index) => const Divider(
@@ -126,6 +141,30 @@ class EventListScreen extends ConsumerWidget {
                   ),
                   itemBuilder: (context, index) => ListTile(
                     title: Text(eventList[index].name),
+                    trailing: Transform.scale(
+                      scale: 1.2,
+                      child: Checkbox(
+                        value: (eventList[index].status == 0),
+                        fillColor: MaterialStateProperty.all(kPrimaryColor),
+                        shape: const CircleBorder(),
+                        onChanged: (bool? value) {
+                          late int status;
+                          if (value!) {
+                            status = 0;
+                          } else {
+                            status = 1;
+                          }
+                          showLoadingDialog();
+                          ref
+                              .read(eventNotifierProvider.notifier)
+                              .updateEventStatus(status, eventList[index].id);
+                          hideDialog();
+                        },
+                      ),
+                    ),
+                    onTap: () => Get.to(
+                      () => EventDetailScreen(currentEvent: eventList[index]),
+                    ),
                   ),
                 ),
               );

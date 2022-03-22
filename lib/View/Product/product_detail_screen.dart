@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get/get.dart';
 import 'package:gscm_store_owner/Accessories/app_button.dart';
+import 'package:gscm_store_owner/Accessories/loading_widget.dart';
 import 'package:gscm_store_owner/Constant/app_theme.dart';
 import 'package:gscm_store_owner/Model/product.dart';
 import 'package:gscm_store_owner/ViewModel/Product/product_detail_notifier.dart';
@@ -36,9 +36,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
           final model = ref.watch(productDetailProvider(widget.product));
           switch (model.status) {
             case ViewStatus.loading:
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const LoadingWidget();
             case ViewStatus.complete:
               return Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -49,17 +47,22 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 20),
-                        const Text('Tên sản phẩm'),
+                        const Text('Tên sản phẩm', style: kListTilePrimaryText),
+                        const SizedBox(height: 5),
                         ReactiveTextField<String>(
                           formControlName: 'name',
+                          decoration: kTextInputDecoration,
                         ),
                         const SizedBox(height: 16),
-                        const Text('Mã sản phẩm'),
+                        const Text('Mã sản phẩm', style: kListTilePrimaryText),
+                        const SizedBox(height: 5),
                         ReactiveTextField<String>(
                           formControlName: 'sku',
+                          decoration: kTextInputDecoration,
                         ),
                         const SizedBox(height: 16),
-                        const Text('Danh mục'),
+                        const Text('Danh mục', style: kListTilePrimaryText),
+                        const SizedBox(height: 5),
                         ReactiveDropdownField(
                           formControlName: 'categoryId',
                           items: model.categories
@@ -70,15 +73,19 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                                 ),
                               )
                               .toList(),
+                          decoration: kTextInputDecoration,
                         ),
                         const SizedBox(height: 16),
-                        const Text('Giá bán'),
+                        const Text('Giá bán', style: kListTilePrimaryText),
+                        const SizedBox(height: 5),
                         ReactiveTextField<int>(
                           formControlName: 'sellPrice',
                           keyboardType: TextInputType.number,
+                          decoration: kTextInputDecoration,
                         ),
                         const SizedBox(height: 16),
-                        const Text('Sản phẩm đơn vị'),
+                        const Text('Sản phẩm đơn vị', style: kListTilePrimaryText),
+                        const SizedBox(height: 5),
                         ReactiveDropdownField(
                           formControlName: 'unpackedProductId',
                           items: model.unpackedProducts.map((product) {
@@ -94,26 +101,34 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                               );
                             }
                           }).toList(),
+                          decoration: kTextInputDecoration,
                         ),
                         const SizedBox(height: 16),
-                        const Text('Tỉ lệ quy đổi'),
+                        const Text('Tỉ lệ quy đổi', style: kListTilePrimaryText),
+                        const SizedBox(height: 5),
                         ReactiveTextField<int>(
                           formControlName: 'conversionRate',
                           keyboardType: TextInputType.number,
+                          decoration: kTextInputDecoration,
                         ),
                         const SizedBox(height: 16),
-                        const Text('Đơn vị'),
+                        const SizedBox(height: 5),
+                        const Text('Đơn vị', style: kListTilePrimaryText),
+                        const SizedBox(height: 5),
                         ReactiveTextField<String>(
                           formControlName: 'unitLabel',
+                          decoration: kTextInputDecoration,
                         ),
                         const SizedBox(height: 16),
-                        const Text('Ngưỡng hết hàng'),
+                        const Text('Ngưỡng hết hàng', style: kListTilePrimaryText),
+                        const SizedBox(height: 5),
                         ReactiveTextField<int>(
                           formControlName: 'lowerThreshold',
                           keyboardType: TextInputType.number,
+                          decoration: kTextInputDecoration,
                         ),
                         const SizedBox(height: 16),
-                        const Text('Trạng thái'),
+                        const Text('Trạng thái', style: kListTilePrimaryText),
                         ReactiveRadioListTile<int>(
                           formControlName: 'status',
                           value: 0,
@@ -136,8 +151,8 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                         ReactiveFormConsumer(
                           builder: (context, formGroup, child) => Center(
                             child: MainButton(
-                              height: 40,
-                              width: 80,
+                              height: 45,
+                              width: double.infinity,
                               bgColor: (formGroup.valid)
                                   ? kPrimaryColor
                                   : kNeutralColor200,
@@ -147,6 +162,7 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                                   color: (formGroup.valid)
                                       ? kWhite
                                       : kPrimaryColor,
+                                  fontSize: 16
                                 ),
                               ),
                               onTap: () {

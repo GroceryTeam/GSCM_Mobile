@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gscm_store_owner/Api/event_api.dart';
 import 'package:gscm_store_owner/Model/event.dart';
@@ -31,7 +30,13 @@ class EventNotifier extends StateNotifier<EventState> {
   void init() async {
     await fetchEvent();
     await fetchActiveEvent();
-    debugPrint('${currentEvent?.name}');
+    state = EventState.data(currentEvent, eventList);
+  }
+
+  void reload() async {
+    state = const EventState.loading();
+    await fetchEvent();
+    await fetchActiveEvent();
     state = EventState.data(currentEvent, eventList);
   }
 
@@ -45,9 +50,16 @@ class EventNotifier extends StateNotifier<EventState> {
 
   Future<void> fetchActiveEvent() async {
     final res = await eventDAO.fetchEvent(brandId: brandId!, status: 0);
-    var eventRes = (res['data'] as List)[0];
+    var eventRes = ((res['data'] as List).isNotEmpty) ? (res['data'] as List)[0] : null;
     if (eventRes != null) {
       currentEvent = Event.fromJson(eventRes);
+    }
+  }
+
+  void updateEventStatus(int status, int eventId) async {
+    bool result = await eventDAO.updateEventStatus(brandId!, eventId, status);
+    if(result) {
+      init();
     }
   }
 }

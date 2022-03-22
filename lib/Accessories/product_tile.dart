@@ -16,7 +16,7 @@ class ProductTile extends StatelessWidget {
   Widget build(BuildContext context) {
     String productName = product.name;
     String firstLetter = productName[0].toUpperCase();
-    String categoryName = product.categoryName;
+    String sku = product.sku;
     String sellPrice =
         NumberFormat.currency(locale: 'vi').format(product.sellPrice);
     String unitLabel = product.unitLabel;
@@ -57,7 +57,7 @@ class ProductTile extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  categoryName,
+                  sku,
                   style: kListTileSecondaryText,
                 ),
               ],

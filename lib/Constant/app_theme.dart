@@ -11,6 +11,7 @@ final kTertiaryColor = Get.theme.colorScheme.tertiary;
 const kBlack = Colors.black;
 const kWhite = Colors.white;
 final kGrey = Colors.grey[700];
+const kOrange = Color(0xFFFFA700);
 
 const kInputTitleTextStyle = TextStyle(
   fontSize: 17,
@@ -57,6 +58,6 @@ const kInputBorder = OutlineInputBorder(
   borderSide: BorderSide(
     color: kBlack,
     style: BorderStyle.solid,
-    width: 1.5,
+    width: 1.2,
   ),
 );

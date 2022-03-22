@@ -35,11 +35,11 @@ class _BrandSelectionState extends ConsumerState<BrandSelection> {
                   child: ListView(
                     children: [
                       if (workingBrands.isNotEmpty) ...[
-                        _buildSectionTitle('Đang hoạt động', kTertiaryColor),
+                        _buildSectionTitle('Đang hoạt động', kPrimaryColor),
                         ...workingBrands
                             .map((brand) => _buildBrandTile(
                                   brand: brand,
-                                  color: kTertiaryColor,
+                                  color: kPrimaryColor,
                                   isSelected: brand.id == selectedBrandId,
                                 ))
                             .toList(),
@@ -56,20 +56,9 @@ class _BrandSelectionState extends ConsumerState<BrandSelection> {
                       TextButton(
                         style: TextButton.styleFrom(
                             splashFactory: NoSplash.splashFactory),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              'Thêm brand ',
-                              style:
-                                  TextStyle(color: kPrimaryColor, fontSize: 26),
-                            ),
-                            Icon(
-                              Icons.add_circle_outline,
-                              color: kPrimaryColor,
-                              size: 26,
-                            ),
-                          ],
+                        child: const Text(
+                          'Đổi tài khoản',
+                          style: TextStyle(color: Colors.grey, fontSize: 18),
                         ),
                         onPressed: () {
                           ref.read(appStartupProvider.notifier).logout();
@@ -82,7 +71,8 @@ class _BrandSelectionState extends ConsumerState<BrandSelection> {
                             Brand selectedBrand = workingBrands
                                 .where((brand) => brand.id == selectedBrandId)
                                 .first;
-                            ref.read(brandNotifierProvider.notifier)
+                            ref
+                                .read(brandNotifierProvider.notifier)
                                 .setSelectedBrand(selectedBrand);
                           }
                         },
@@ -93,7 +83,7 @@ class _BrandSelectionState extends ConsumerState<BrandSelection> {
                         ),
                         backgroundColor: (selectedBrandId != -1)
                             ? kPrimaryColor
-                            : kNeutralColor200,
+                            : Colors.grey[300],
                       )
                     ],
                   ),
@@ -139,7 +129,7 @@ class _BrandSelectionState extends ConsumerState<BrandSelection> {
       child: InkWell(
         splashFactory: NoSplash.splashFactory,
         onTap: () {
-          if(isWorkingBrand) {
+          if (isWorkingBrand) {
             setState(() {
               selectedBrandId = brand.id;
             });

@@ -59,12 +59,14 @@ class InvoiceNotifier extends StateNotifier<InvoiceState> {
   }
 
   void setDateRange(DateTimeRange range) {
+    state = const InvoiceState.loading();
     startDate = range.start;
     endDate = range.end;
     fetchInvoice();
   }
 
   void setChosenStore(Store chosenStore) {
+    state = const InvoiceState.loading();
     this.chosenStore = chosenStore;
     fetchInvoice();
   }
@@ -91,9 +93,8 @@ class InvoiceNotifier extends StateNotifier<InvoiceState> {
     );
     pageIndexBill = billRes['pageIndex'] as int;
     totalPageBill = billRes['totalPage'] as int;
-    bills.addAll((billRes['data'] as List)
-        .map((bill) => Bill.fromJson(bill))
-        .toList());
+    bills =
+        (billRes['data'] as List).map((bill) => Bill.fromJson(bill)).toList();
   }
 
   Future<void> fetchReceipt(int storeId) async {
@@ -105,15 +106,25 @@ class InvoiceNotifier extends StateNotifier<InvoiceState> {
     );
     pageIndexReceipt = receiptRes['pageIndex'];
     totalPageReceipt = receiptRes['totalPage'];
-    receipts.addAll((receiptRes['data'] as List)
+    receipts = (receiptRes['data'] as List)
         .map((receipt) => Receipt.fromJson(receipt))
-        .toList());
+        .toList();
   }
 
   void fetchMoreBill() async {
     if (pageIndexBill < totalPageBill) {
       ++pageIndexBill;
-      await fetchBill(chosenStore.id);
+      final billRes = await invoiceDAO.fetchBill(
+        storeId: chosenStore.id,
+        startDate: startDate,
+        endDate: endDate,
+        pageIndex: pageIndexBill,
+      );
+      pageIndexBill = billRes['pageIndex'] as int;
+      totalPageBill = billRes['totalPage'] as int;
+      bills.addAll((billRes['data'] as List)
+          .map((bill) => Bill.fromJson(bill))
+          .toList());
       state = InvoiceState.data(
         bills: bills,
         receipts: receipts,
@@ -128,7 +139,17 @@ class InvoiceNotifier extends StateNotifier<InvoiceState> {
   void fetchMoreReceipt() async {
     if (pageIndexReceipt < totalPageReceipt) {
       ++pageIndexReceipt;
-      await fetchReceipt(chosenStore.id);
+      final receiptRes = await invoiceDAO.fetchReceipt(
+        startDate: startDate,
+        endDate: endDate,
+        storeId: chosenStore.id,
+        pageIndex: pageIndexReceipt,
+      );
+      pageIndexReceipt = receiptRes['pageIndex'];
+      totalPageReceipt = receiptRes['totalPage'];
+      receipts.addAll((receiptRes['data'] as List)
+          .map((receipt) => Receipt.fromJson(receipt))
+          .toList());
       state = InvoiceState.data(
         bills: bills,
         receipts: receipts,

@@ -50,7 +50,15 @@ class UserService {
         'userId': userId,
       },
     );
-    if(res.statusCode == 200) {
+    if (res.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> register(Map<String, dynamic> data) async {
+    final res = await request.post('users', data: data);
+    if (res.statusCode == 200) {
       return true;
     }
     return false;

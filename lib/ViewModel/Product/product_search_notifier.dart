@@ -44,4 +44,15 @@ class ProductSearchNotifier extends BaseChangeNotifier {
       searchProduct(keyword);
     }
   }
+
+  Future<Product> searchProdutSku(String sku) async {
+    final res = await productDAO.fetchProducts(
+      brandId: brandId!,
+      sku: sku,
+      index: pageIndex,
+      size: pageSize,
+    );
+    List<Product> tmp = (res['data'] as List).map((product) => Product.fromJson(product)).toList();
+    return tmp[0];
+  }
 }

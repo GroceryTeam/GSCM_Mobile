@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
@@ -50,9 +48,9 @@ class ProfileScreen extends ConsumerWidget {
                   'Cửa hàng',
                   style: TextStyle(color: kGrey),
                 ),
-                onTap: () {},
+                onTap: () => Get.toNamed(AppRoute.stores),
               ),
-              _section(
+              /* _section(
                 icon: Icon(
                   Icons.person,
                   color: kGrey,
@@ -62,7 +60,7 @@ class ProfileScreen extends ConsumerWidget {
                   style: TextStyle(color: kGrey),
                 ),
                 onTap: () {},
-              ),
+              ), */
               _section(
                 icon: Icon(
                   Icons.category,

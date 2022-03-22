@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
+import 'package:gscm_store_owner/Accessories/loading_widget.dart';
 import 'package:gscm_store_owner/Accessories/product_tile.dart';
 import 'package:gscm_store_owner/Accessories/shimmer_block.dart';
 import 'package:gscm_store_owner/Constant/app_route.dart';
-import 'package:gscm_store_owner/Constant/app_theme.dart';
 import 'package:gscm_store_owner/Model/category.dart';
 import 'package:gscm_store_owner/View/Product/product_detail_screen.dart';
 import 'package:gscm_store_owner/ViewModel/Category/category_notifier.dart';
@@ -108,9 +108,7 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
               builder: (context, ref, child) {
                 final productState = ref.watch(productNotifierProvider);
                 return productState.when(
-                  loading: () => const Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                  loading: () => const LoadingWidget(),
                   data: (products, isLoadingMore) => RefreshIndicator(
                     onRefresh: () =>
                         ref.read(productNotifierProvider.notifier).refresh(),
@@ -126,9 +124,7 @@ class _ProductListScreenState extends ConsumerState<ProductListScreen> {
                         if (index == products.length && isLoadingMore) {
                           return const Padding(
                             padding: EdgeInsets.symmetric(vertical: 12),
-                            child: Center(
-                              child: CircularProgressIndicator(),
-                            ),
+                            child: LoadingWidget(),
                           );
                         }
                         return ProductTile(product: products[index]);

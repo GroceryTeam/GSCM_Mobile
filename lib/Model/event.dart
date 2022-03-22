@@ -22,6 +22,25 @@ class Event {
           .toList(),
     );
   }
+
+  Event.clone(Event anotherEvent)
+      : this(
+          id: anotherEvent.id,
+          name: anotherEvent.name,
+          productCount: anotherEvent.productCount,
+          status: anotherEvent.status,
+          details: anotherEvent.details
+              .map((detail) => EventDetail.clone(detail))
+              .toList(),
+        );
+
+  Map<String, dynamic> toJson() {
+    return {
+      'eventName': name,
+      'status': status,
+      'details': details.map((detail) => detail.toJson()).toList()
+    };
+  }
 }
 
 class EventDetail {
@@ -47,5 +66,22 @@ class EventDetail {
       originalPrice: json['originalPrice'],
       sku: json['sku'],
     );
+  }
+
+  EventDetail.clone(EventDetail anotherDetail)
+      : this(
+          eventId: anotherDetail.eventId,
+          productId: anotherDetail.productId,
+          productName: anotherDetail.productName,
+          sku: anotherDetail.sku,
+          newPrice: anotherDetail.newPrice,
+          originalPrice: anotherDetail.originalPrice,
+        );
+
+  Map<String, dynamic> toJson() {
+    return {
+      'productId': productId,
+      'newPrice': newPrice,
+    };
   }
 }

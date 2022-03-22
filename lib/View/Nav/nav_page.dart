@@ -1,5 +1,9 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:gscm_store_owner/Constant/app_route.dart';
 import 'package:gscm_store_owner/Constant/app_theme.dart';
+import 'package:gscm_store_owner/Utils/push_notification_service.dart';
 import 'package:gscm_store_owner/View/Dashboard/dashboard_screen.dart';
 import 'package:gscm_store_owner/View/Event/event_list_screen.dart';
 import 'package:gscm_store_owner/View/Invoice/invoice_page.dart';
@@ -23,6 +27,15 @@ class _NavPageState extends State<NavPage> {
     const ProfileScreen(key: PageStorageKey<String>('profile')),
   ];
   final bucket = PageStorageBucket();
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {
+      String screen = event.data['Screen'];
+      Get.toNamed(screen);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

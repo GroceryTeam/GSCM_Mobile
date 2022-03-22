@@ -189,24 +189,29 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    TextButton(
-                      onPressed: () => Get.to(() => const OutOfStockScreen()),
-                      child: Text(
-                        'Xem thêm',
-                        style: kListTileSecondaryText.copyWith(
-                            color: kPrimaryColor, fontSize: 13),
-                      ),
-                      style: TextButton.styleFrom(
-                        splashFactory: NoSplash.splashFactory,
+                    InkWell(
+                      onTap: () => Get.to(() => const OutOfStockScreen()),
+                      splashFactory: NoSplash.splashFactory,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'Xem thêm',
+                            style: kListTileSecondaryText.copyWith(
+                                color: kPrimaryColor, fontSize: 13),
+                          ),
+                          Icon(Icons.chevron_right_rounded, color: kPrimaryColor),
+                        ],
                       ),
                     ),
-                    Icon(Icons.chevron_right_rounded, color: kPrimaryColor),
+                    
                   ],
                 ),
               ],
             ),
             ListView.separated(
               shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: (noosProducts.length < 5) ? noosProducts.length : 5,
               separatorBuilder: (context, index) => const Divider(
                 height: 0,

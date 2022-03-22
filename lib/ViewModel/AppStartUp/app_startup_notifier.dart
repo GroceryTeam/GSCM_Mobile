@@ -107,4 +107,16 @@ class AppStartupNotifier extends StateNotifier<AppStartupState> {
     }
     state = AppStartupState.authenticated(user);
   }
+
+  Future<bool> register(Map<String, dynamic> form) async {
+    Map<String, dynamic> data = {
+      'username': form['username'],
+      'password': form['password'],
+      'email': form['email'],
+      'phone': form['phone'],
+      'name': form['name'],
+    };
+    bool result = await userDAO.register(data);
+    return result;
+  }
 }
