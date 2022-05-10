@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gscm_store_owner/Accessories/app_button.dart';
+import 'package:gscm_store_owner/Accessories/dialog.dart';
 import 'package:gscm_store_owner/Accessories/loading_widget.dart';
 import 'package:gscm_store_owner/Constant/app_theme.dart';
 import 'package:gscm_store_owner/Model/product.dart';
@@ -167,12 +168,14 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                               ),
                               onTap: () {
                                 if (formGroup.valid) {
+                                  showLoadingDialog();
                                   if(widget.product != null) {
                                     model.updateProduct();
                                   }
                                   else {
                                     model.createProduct();
                                   }
+                                  hideDialog();
                                 }
                               },
                             ),
